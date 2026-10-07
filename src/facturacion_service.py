@@ -45,7 +45,10 @@ class FacturacionService:
 
     # --- RF-03 ---------------------------------------------------------
     def aplicar_descuento_por_volumen(self, subtotal: float, cantidad_articulos: int) -> float:
-        pass
+        if subtotal < 0:
+            raise ValueError("El subtotal no puede ser negativo")
+
+
 
     # --- RF-04 ---------------------------------------------------------
     def validar_cedula(self, cedula: Optional[str]) -> bool:
