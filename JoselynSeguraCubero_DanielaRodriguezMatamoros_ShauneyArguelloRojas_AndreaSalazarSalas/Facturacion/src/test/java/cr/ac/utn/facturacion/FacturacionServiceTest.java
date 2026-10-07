@@ -49,4 +49,14 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> service.calcularSubtotal(items));
     }
+
+    @Test
+    void calcularSubtotal_conCantidadCero_lanzaError() {
+        // Arrange
+        List<Item> items = List.of(new Item(100.0, 0));
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularSubtotal(items));
+    }
 }
