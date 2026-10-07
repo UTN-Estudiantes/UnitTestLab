@@ -325,3 +325,15 @@ def test_calcular_monto_final_con_descuento_igual_al_total_retorna_cero():
 
     # Assert
     assert total == 0.0
+
+
+def test_calcular_monto_final_con_valores_validos_calcula_correctamente():
+    """RF-05: Con valores válidos calcula subtotal + impuesto - descuento."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act
+    total = servicio.calcular_monto_final(subtotal=10000.0, impuesto=1300.0, descuento=500.0)
+
+    # Assert
+    assert total == 10800.0
