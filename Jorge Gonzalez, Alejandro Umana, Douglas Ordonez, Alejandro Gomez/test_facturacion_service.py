@@ -55,66 +55,30 @@ class TestFacturacionService(unittest.TestCase):
         self.assertAlmostEqual(self.service.calcular_subtotal(items), 16.0)
 
 
-#PRUEBAS RF-02 — calcularImpuesto(subtotal, tasa)
-#[RED]
-    def test_calcular_impuesto_con_subtotal_negativo_debe_lanzar_error(servicio):
-        #Arange
-        subtotal = -1.0
-        tasa = 0.13
+    # PRUEBAS RF-02 — calcularImpuesto(subtotal, tasa)
+    def test_calcular_impuesto_con_subtotal_negativo_debe_lanzar_error(self):
+        with self.assertRaises(ValueError):
+            self.service.calcular_impuesto(subtotal=-1.0, tasa=0.13)
 
-        #Act y Assert
-        with pytest.raises(ValueError):
-            servicio.calcular_impuesto(subtotal, tasa)
+    def test_calcular_impuesto_con_tasa_negativa_debe_lanzar_error(self):
+        with self.assertRaises(ValueError):
+            self.service.calcular_impuesto(subtotal=100.0, tasa=-0.05)
 
-    def test_calcular_impuesto_con_tasa_negativa_debe_lanzar_error(servicio):
-        # Arrange
-        subtotal = 100.0
-        tasa = 1.01
+    def test_calcular_impuesto_con_tasa_mayor_a_uno_lanza_error(self):
+        with self.assertRaises(ValueError):
+            self.service.calcular_impuesto(subtotal=100.0, tasa=1.01)
 
-        #Act y Assert
-        with pytest.raises(ValueError):
-            servicio.calcular_impuesto(subtotal, tasa)
+    def test_calcular_impuesto_con_subtotal_cero_retorna_cero(self):
+        resultado = self.service.calcular_impuesto(subtotal=0.0, tasa=0.13)
+        self.assertEqual(resultado, 0.0)
 
-    def test_calcular_impuesto_con_tasa_mayor_a_uno_lanza_error(servicio):
-        #Arrange
-        subtotal = 100.0
-        tasa = 1.01
-        with pytest.raises(ValueError):
-            servicio.calcular_impuesto(subtotal, tasa)
+    def test_calcular_impuesto_con_valores_validos_retorna_subtotal_por_tasa(self):
+        resultado = self.service.calcular_impuesto(subtotal=1000.0, tasa=0.13)
+        self.assertAlmostEqual(resultado, 130.0)
 
-    def test_calcular_impuesto_con_subtotal_cero_retorna_cero(servicio):
-        #Arrange
-        subtotal = 0.0
-        tasa = 0.13
-
-        #Act
-        resultado = servicio.calcular_impuesto(subtotal, tasa)
-
-        #Assert
-        resultado == 0.0
-
-    def test_calcular_impuesto_con_valores_validos_retorna_subtotal_por_tasa(servicio):
-        #Arrange
-        subtotal = 1000.0
-        tasa = 0.13
-
-        #Act
-        resultado = servicio.calcular_impuesto(subtotal, tasa)
-
-        #Assert
-        assert resultado == pytest.approx(130.0)
-
-
-    def test_calcular_impuesto_con_tasa_exactamente_uno_es_valida(servicio):
-        #Arrange
-        subtotal = 200.0
-        tasa = 1.0
-
-        #Act
-        resultado = servicio.calcular_impuesto(subtotal, tasa)
-
-        #Assert
-        assert resultado == pytest.approx(200.0)
+    def test_calcular_impuesto_con_tasa_exactamente_uno_es_valida(self):
+        resultado = self.service.calcular_impuesto(subtotal=200.0, tasa=1.0)
+        self.assertAlmostEqual(resultado, 200.0)
 
 # PRUEBAS RF-03 — aplicarDescuentoPorVolumen(subtotal, cantidadArticulos)
     def test_aplicarDescuentoPorVolumen_conSubtotalOCantidadNegativa_lanzaError(self):
@@ -179,14 +143,14 @@ class TestFacturacionService(unittest.TestCase):
         self.assertFalse(resultado)
 
 
-    def validar_cedula_con_cadena_vacia(self):
+    def test_validar_cedula_con_cadena_vacia(self):
         cedula = ""
         resultado = self.service.validar_cedula(cedula)
         self.assertFalse(resultado)
 
  
     def test_validar_cedula_con_menos_de_nueve_caracteres(self):
-        cedula = "208710996"
+        cedula = "20871099"
         resultado = self.service.validar_cedula(cedula)
         self.assertFalse(resultado)
 
@@ -212,30 +176,25 @@ class TestFacturacionService(unittest.TestCase):
         resultado = self.service.validar_cedula(cedula)
         self.assertFalse(resultado)
 
-# PRUEBAS RF-05 — calcularMontoFinal(subtotal, impuesto, descuento)
+    # PRUEBAS RF-05 — calcularMontoFinal(subtotal, impuesto, descuento)
+    def test_subtotal_o_impuesto_negativo_lanza_error(self):
+        with self.assertRaises(ValueError):
+            self.service.calcular_monto_final(subtotal=-100.0, impuesto=13.0, descuento=0.0)
+        with self.assertRaises(ValueError):
+            self.service.calcular_monto_final(subtotal=100.0, impuesto=-13.0, descuento=0.0)
 
-    def test_subtotal_o_impuesto_negativo_lanza_error():
-        with pytest.raises(ValueError):
-            calcular_monto_final(-100.0, 13.0, 0.0)
-        with pytest.raises(ValueError):
-            calcular_monto_final(100.0, -13.0, 0.0)
+    def test_descuento_negativo_lanza_error(self):
+        with self.assertRaises(ValueError):
+            self.service.calcular_monto_final(subtotal=100.0, impuesto=13.0, descuento=-5.0)
 
+    def test_descuento_mayor_que_subtotal_mas_impuesto_lanza_error(self):
+        with self.assertRaises(ValueError):
+            self.service.calcular_monto_final(subtotal=100.0, impuesto=13.0, descuento=113.01)
 
-    def test_descuento_negativo_lanza_error():
-        with pytest.raises(ValueError):
-            calcular_monto_final(100.0, 13.0, -5.0)
+    def test_valores_validos_calcula_monto_final(self):
+        monto = self.service.calcular_monto_final(subtotal=100.0, impuesto=13.0, descuento=20.0)
+        self.assertAlmostEqual(monto, 93.0)
 
-
-    def test_descuento_mayor_que_subtotal_mas_impuesto_lanza_error():
-        with pytest.raises(ValueError):
-            calcular_monto_final(100.0, 13.0, 113.01)
-
-
-    def test_valores_validos_calcula_monto_final():
-        assert calcular_monto_final(100.0, 13.0, 20.0) == pytest.approx(93.0)
-
-
-    def test_descuento_igual_a_subtotal_mas_impuesto_da_cero():
-        assert calcular_monto_final(100.0, 13.0, 113.0) == 0.0
-            
-
+    def test_descuento_igual_a_subtotal_mas_impuesto_da_cero(self):
+        monto = self.service.calcular_monto_final(subtotal=100.0, impuesto=13.0, descuento=113.0)
+        self.assertEqual(monto, 0.0)
