@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../Facturacion.Test/Facturacion.Test.csproj" Id="748a09af-1fb7-44eb-9340-b82a375dd47f" />
+  <Project Path="Facturacion.csproj" />
+</Solution>
