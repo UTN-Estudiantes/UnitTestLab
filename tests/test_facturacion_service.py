@@ -108,3 +108,19 @@ def test_calcular_impuesto_con_valores_validos_retorna_subtotal_por_tasa(servici
     # Assert
     assert resultado == pytest.approx(130.0)
 
+# =============================================================================
+# RF-03 aplicar_descuento_por_volumen
+# =============================================================================
+
+def test_aplicar_descuento_por_volumen_con_subtotal_negativo_lanza_error(servicio):
+    # Arrange
+    subtotal = -100.0
+    cantidad_articulos = 10
+
+    # Act
+    with pytest.raises(ValueError) as error:
+        servicio.aplicar_descuento_por_volumen(subtotal, cantidad_articulos)
+
+    # Assert
+    assert "subtotal" in str(error.value).lower()
+
