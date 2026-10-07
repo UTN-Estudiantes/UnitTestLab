@@ -69,6 +69,8 @@ class FacturacionService:
             raise ValueError("El subtotal no puede ser negativo")
         if cantidad_articulos < 0:
             raise ValueError("La cantidad de articulos no puede ser negativa")
+        if cantidad_articulos < 10:
+            return 0.0
 
     def validar_cedula(self, cedula: Optional[str]) -> bool:
         """RF-04: Valida el formato de cédula física costarricense (9 dígitos numéricos)."""
