@@ -81,6 +81,9 @@ public class FacturacionService {
         if (subtotal < 0) {
             throw new IllegalArgumentException("El subtotal no puede ser negativo");
         }
+        if (impuesto < 0) {
+            throw new IllegalArgumentException("El impuesto no puede ser negativo");
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 }
