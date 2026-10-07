@@ -28,4 +28,16 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.calcularSubtotal(null));
     }
+
+    @Test
+    void calcularSubtotal_conListaVacia_retornaCero() {
+        // Arrange
+        List<ItemFactura> items = Collections.emptyList();
+
+        // Act
+        double subtotal = servicio.calcularSubtotal(items);
+
+        // Assert
+        assertEquals(0.0, subtotal, 0.001);
+    }
 }
