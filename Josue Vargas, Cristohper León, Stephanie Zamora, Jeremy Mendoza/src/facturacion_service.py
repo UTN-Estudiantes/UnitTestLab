@@ -92,6 +92,7 @@ class FacturacionService:
             raise ValueError("El descuento no puede ser mayor que el total a pagar")
         if float(descuento) == total_a_pagar:
             return 0.0
+        return round(total_a_pagar - float(descuento), 2)
 
     # Alias compatibles con camelCase según enunciado
     calcularSubtotal = calcular_subtotal
