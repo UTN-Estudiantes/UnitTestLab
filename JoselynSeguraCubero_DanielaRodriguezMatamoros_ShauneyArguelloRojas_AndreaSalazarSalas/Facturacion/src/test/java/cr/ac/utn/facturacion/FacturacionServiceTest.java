@@ -70,6 +70,21 @@ class FacturacionServiceTest {
                 () -> service.calcularSubtotal(items));
     }
 
+    @Test
+    void calcularSubtotal_conVariosItems_sumaCorrectamente() {
+        // Arrange
+        List<Item> items = List.of(
+                new Item(1000.0, 2),
+                new Item(500.0, 3),
+                new Item(250.0, 4));
+
+        // Act
+        double resultado = service.calcularSubtotal(items);
+
+        // Assert
+        assertEquals(4500.0, resultado, DELTA);
+    }
+
     // ===================== RF-02 calcularImpuesto =====================
 
     @Test
