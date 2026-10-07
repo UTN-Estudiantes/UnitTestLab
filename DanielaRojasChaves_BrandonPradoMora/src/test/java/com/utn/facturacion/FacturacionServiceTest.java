@@ -252,4 +252,59 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(0.0, monto, 0.001);
     }
+
+    @Test
+    void calcularSubtotal_conCantidadNegativa_lanzaError() {
+        // Arrange
+        List<ItemFactura> items = List.of(new ItemFactura(500.0, -2));
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> servicio.calcularSubtotal(items));
+    }
+
+    @Test
+    void calcularImpuesto_conTasaIgualAUno_esValida() {
+        // Act: 1 (100%) es el limite valido
+        double impuesto = servicio.calcularImpuesto(1000.0, 1.0);
+
+        // Assert
+        assertEquals(1000.0, impuesto, 0.001);
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conNueveArticulos_retornaCero() {
+        // Act: 9 es el ultimo valor sin descuento
+        double descuento = servicio.aplicarDescuentoPorVolumen(1000.0, 9);
+
+        // Assert
+        assertEquals(0.0, descuento, 0.001);
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conDiecinueveArticulos_retornaCincoPorCiento() {
+        // Act: 19 es el ultimo valor del tramo de 5%
+        double descuento = servicio.aplicarDescuentoPorVolumen(1000.0, 19);
+
+        // Assert
+        assertEquals(50.0, descuento, 0.001);
+    }
+
+    @Test
+    void validarCedula_conEspacio_retornaFalse() {
+        // Act: 9 caracteres con un espacio
+        boolean resultado = servicio.validarCedula("1234 5678");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_conGuion_retornaFalse() {
+        // Act: 9 caracteres con un guion
+        boolean resultado = servicio.validarCedula("1-2345678");
+
+        // Assert
+        assertFalse(resultado);
+    }
 }
