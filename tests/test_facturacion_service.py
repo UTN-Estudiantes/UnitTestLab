@@ -184,3 +184,19 @@ def test_aplicar_descuento_por_volumen_con_19_articulos_retorna_cinco_por_ciento
 
     # Assert
     assert resultado == pytest.approx(50.0)
+
+# =============================================================================
+# RF-04 validar_cedula
+# =============================================================================
+
+
+def test_validar_cedula_nula_retorna_false(servicio):
+    # Arrange
+    cedula = None
+
+    # Act
+    resultado = servicio.validar_cedula(cedula)
+
+    # Assert
+    assert resultado is False
+
