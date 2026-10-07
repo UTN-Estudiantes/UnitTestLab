@@ -1,9 +1,11 @@
 import unittest
+import pytest
 from facturacion_service import FacturacionService, Item
 
 class TestFacturacionService(unittest.TestCase):
     def setUp(self):
         self.service = FacturacionService()
+
 
 # PRUEBAS RF-01 — calcularSubtotal(items)
 
@@ -53,7 +55,66 @@ class TestFacturacionService(unittest.TestCase):
         self.assertAlmostEqual(self.service.calcular_subtotal(items), 16.0)
 
 
+#PRUEBAS RF-02 — calcularImpuesto(subtotal, tasa)
+#[RED]
+    def test_calcular_impuesto_con_subtotal_negativo_debe_lanzar_error(servicio):
+        #Arange
+        subtotal = -1.0
+        tasa = 0.13
 
+        #Act y Assert
+        with pytest.raises(ValueError):
+            servicio.calcular_impuesto(subtotal, tasa)
+
+    def test_calcular_impuesto_con_tasa_negativa_debe_lanzar_error(servicio):
+        # Arrange
+        subtotal = 100.0
+        tasa = 1.01
+
+        #Act y Assert
+        with pytest.raises(ValueError):
+            servicio.calcular_impuesto(subtotal, tasa)
+
+    def test_calcular_impuesto_con_tasa_mayor_a_uno_lanza_error(servicio):
+        #Arrange
+        subtotal = 100.0
+        tasa = 1.01
+        with pytest.raises(ValueError):
+            servicio.calcular_impuesto(subtotal, tasa)
+
+    def test_calcular_impuesto_con_subtotal_cero_retorna_cero(servicio):
+        #Arrange
+        subtotal = 0.0
+        tasa = 0.13
+
+        #Act
+        resultado = servicio.calcular_impuesto(subtotal, tasa)
+
+        #Assert
+        resultado == 0.0
+
+    def test_calcular_impuesto_con_valores_validos_retorna_subtotal_por_tasa(servicio):
+        #Arrange
+        subtotal = 1000.0
+        tasa = 0.13
+
+        #Act
+        resultado = servicio.calcular_impuesto(subtotal, tasa)
+
+        #Assert
+        assert resultado == pytest.approx(130.0)
+
+
+    def test_calcular_impuesto_con_tasa_exactamente_uno_es_valida(servicio):
+        #Arrange
+        subtotal = 200.0
+        tasa = 1.0
+
+        #Act
+        resultado = servicio.calcular_impuesto(subtotal, tasa)
+
+        #Assert
+        assert resultado == pytest.approx(200.0)
 
 # PRUEBAS RF-03 — aplicarDescuentoPorVolumen(subtotal, cantidadArticulos)
     def test_aplicarDescuentoPorVolumen_conSubtotalOCantidadNegativa_lanzaError(self):
