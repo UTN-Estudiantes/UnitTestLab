@@ -85,7 +85,8 @@ class FacturacionService:
 
     def calcular_monto_final(self, subtotal: float, impuesto: float, descuento: float) -> float:
         """RF-05: Calcula el monto final a pagar combinando subtotal, impuesto y descuento."""
-        pass
+        if subtotal < 0 or impuesto < 0 or descuento < 0:
+            raise ValueError("Los montos no pueden ser negativos")
 
     # Alias compatibles con camelCase según enunciado
     calcularSubtotal = calcular_subtotal
