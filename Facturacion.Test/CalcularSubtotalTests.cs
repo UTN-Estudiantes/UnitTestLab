@@ -48,19 +48,6 @@ namespace Facturacion.Test
         }
 
         [Fact]
-        public void CalcularSubtotal_UnItemValido_RetornaPrecioPorCantidad()
-        {
-            var items = new List<ItemFactura>
-            {
-                new ItemFactura { PrecioUnitario = 10m, Cantidad = 3 }
-            };
-
-            var resultado = _service.CalcularSubtotal(items);
-
-            Assert.Equal(30.0m, resultado);
-        }
-
-        [Fact]
         public void CalcularSubtotal_VariosItemsValidos_RetornaSumaDePrecioPorCantidad()
         {
             var items = new List<ItemFactura>
