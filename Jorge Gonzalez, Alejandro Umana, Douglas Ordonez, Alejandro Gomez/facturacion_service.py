@@ -21,8 +21,14 @@ class FacturacionService:
 
             return subtotal
     def calcular_impuesto(self, subtotal: float, tasa: float) -> float:
-        raise NotImplementedError()
-    
+            """RF-02: Calcula el impuesto aplicando la tasa al subtotal."""
+            if subtotal < 0:
+                raise ValueError("El subtotal no puede ser negativo.")
+            if tasa < 0 or tasa > 1.0:
+                raise ValueError("La tasa de impuesto debe estar entre 0.0 y 1.0.")
+
+            return subtotal * tasa
+        
     def aplicar_descuento_por_volumen(self, subtotal: float, cantidad_articulos: int) -> float:
         raise NotImplementedError()
     
