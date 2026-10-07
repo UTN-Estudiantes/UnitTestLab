@@ -44,6 +44,9 @@ public class FacturacionService {
         if (subtotal < 0) {
             throw new IllegalArgumentException("El subtotal no puede ser negativo");
         }
+        if (cantidadArticulos < 0) {
+            throw new IllegalArgumentException("La cantidad de articulos no puede ser negativa");
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
