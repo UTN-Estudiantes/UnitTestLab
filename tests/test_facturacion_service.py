@@ -40,3 +40,22 @@ def test_calcular_subtotal_con_lista_valida_retorna_suma(servicio):
         Item(precio_unitario=5.5, cantidad=3),
     ]
     assert servicio.calcular_subtotal(items) == 36.5
+
+
+# =============================================================================
+# RF-02 calcular_impuesto
+# =============================================================================
+
+def test_calcular_impuesto_con_subtotal_negativo_lanza_error(servicio):
+    # Arrange
+    subtotal = -100.0
+    tasa = 0.13
+
+    # Act
+    with pytest.raises(ValueError) as error:
+        servicio.calcular_impuesto(subtotal, tasa)
+
+    # Assert
+    assert "subtotal" in str(error.value).lower()
+
+
