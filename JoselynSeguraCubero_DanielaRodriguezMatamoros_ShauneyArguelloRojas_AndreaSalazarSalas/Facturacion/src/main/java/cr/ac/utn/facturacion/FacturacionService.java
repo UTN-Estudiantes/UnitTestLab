@@ -47,6 +47,9 @@ public class FacturacionService {
         if (cantidadArticulos < 0) {
             throw new IllegalArgumentException("La cantidad de articulos no puede ser negativa");
         }
+        if (cantidadArticulos < 10) {
+            return 0.0;
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
