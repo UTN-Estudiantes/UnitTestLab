@@ -188,3 +188,13 @@ def test_aplicar_descuento_con_menos_de_diez_articulos_retorna_cero():
 
     # Assert
     assert descuento == 0.0
+
+
+def test_aplicar_descuento_entre_diez_y_diecinueve_articulos_aplica_cinco_por_ciento():
+    """RF-03: Si cantidadArticulos está entre 10 y 19, aplica 5% del subtotal."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act & Assert
+    assert servicio.aplicar_descuento_por_volumen(subtotal=10000.0, cantidad_articulos=10) == 500.0
+    assert servicio.aplicar_descuento_por_volumen(subtotal=10000.0, cantidad_articulos=19) == 500.0
