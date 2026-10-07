@@ -36,15 +36,20 @@ class FacturacionService:
 
         subtotal = 0.0
         for item in items:
-            precio = item.precio_unitario if hasattr(item, "precio_unitario") else item["precio_unitario"]
-            cantidad = item.cantidad if hasattr(item, "cantidad") else item["cantidad"]
-            if precio < 0:
-                raise ValueError("El precio unitario no puede ser negativo")
-            if cantidad <= 0:
-                raise ValueError("La cantidad del item debe ser mayor a cero")
-            subtotal += float(precio) * int(cantidad)
+            precio, cantidad = self._validar_item(item)
+            subtotal += precio * cantidad
 
         return round(subtotal, 2)
+
+    def _validar_item(self, item: Union[ItemFactura, dict]) -> tuple[float, int]:
+        """Valida que un item tenga precio unitario y cantidad válidos."""
+        precio = item.precio_unitario if hasattr(item, "precio_unitario") else item["precio_unitario"]
+        cantidad = item.cantidad if hasattr(item, "cantidad") else item["cantidad"]
+        if precio < 0:
+            raise ValueError("El precio unitario no puede ser negativo")
+        if cantidad <= 0:
+            raise ValueError("La cantidad del item debe ser mayor a cero")
+        return float(precio), int(cantidad)
 
     def calcular_impuesto(self, subtotal: float, tasa: float) -> float:
         """RF-02: Calcula el monto de impuesto (IVA) sobre un subtotal dada una tasa."""
