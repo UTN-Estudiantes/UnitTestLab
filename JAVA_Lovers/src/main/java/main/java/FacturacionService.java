@@ -22,5 +22,10 @@ public class FacturacionService {
             throw new IllegalArgumentException("La cantidad debe ser mayor a cero");
         }
     }
-    
+
+
+    // RF-02
+    public double calcularImpuesto(double subtotal, double tasa) {
+        throw new UnsupportedOperationException();
+    }    
 }
