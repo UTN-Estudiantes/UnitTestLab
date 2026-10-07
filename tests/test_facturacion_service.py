@@ -243,3 +243,15 @@ def test_validar_cedula_con_letra_retorna_false(servicio):
 
     # Assert
     assert resultado is False
+
+
+def test_validar_cedula_con_espacio_retorna_false(servicio):
+    # Arrange
+    cedula = "1234 5678"
+
+    # Act
+    resultado = servicio.validar_cedula(cedula)
+
+    # Assert
+    assert resultado is False
+
