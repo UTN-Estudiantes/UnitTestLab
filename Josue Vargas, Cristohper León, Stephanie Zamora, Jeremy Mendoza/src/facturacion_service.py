@@ -77,7 +77,7 @@ class FacturacionService:
 
     def validar_cedula(self, cedula: Optional[str]) -> bool:
         """RF-04: Valida el formato de cédula física costarricense (9 dígitos numéricos)."""
-        if cedula is None or cedula == "":
+        if cedula is None or len(cedula) < 9:
             return False
 
     def calcular_monto_final(self, subtotal: float, impuesto: float, descuento: float) -> float:
