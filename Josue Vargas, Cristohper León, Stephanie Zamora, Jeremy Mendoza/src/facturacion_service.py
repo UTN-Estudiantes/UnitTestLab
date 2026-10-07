@@ -87,6 +87,9 @@ class FacturacionService:
         """RF-05: Calcula el monto final a pagar combinando subtotal, impuesto y descuento."""
         if subtotal < 0 or impuesto < 0 or descuento < 0:
             raise ValueError("Los montos no pueden ser negativos")
+        total_a_pagar = float(subtotal) + float(impuesto)
+        if float(descuento) > total_a_pagar:
+            raise ValueError("El descuento no puede ser mayor que el total a pagar")
 
     # Alias compatibles con camelCase según enunciado
     calcularSubtotal = calcular_subtotal
