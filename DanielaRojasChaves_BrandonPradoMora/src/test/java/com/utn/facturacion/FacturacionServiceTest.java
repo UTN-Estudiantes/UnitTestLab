@@ -40,4 +40,14 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(0.0, subtotal, 0.001);
     }
+
+    @Test
+    void calcularSubtotal_conPrecioNegativo_lanzaError() {
+        // Arrange
+        List<ItemFactura> items = List.of(new ItemFactura(-500.0, 1));
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> servicio.calcularSubtotal(items));
+    }
 }
