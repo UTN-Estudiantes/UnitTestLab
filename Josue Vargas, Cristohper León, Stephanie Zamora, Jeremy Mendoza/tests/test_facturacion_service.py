@@ -152,3 +152,17 @@ def test_calcular_impuesto_con_valores_validos_calcula_correctamente():
 
     # Assert
     assert impuesto == 1300.0
+
+
+# =============================================================================
+# RF-03: Descuento por volumen de compra (Funcional)
+# =============================================================================
+
+def test_aplicar_descuento_con_subtotal_negativo_lanza_value_error():
+    """RF-03: Si el subtotal es negativo, debe lanzar ValueError."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act & Assert
+    with pytest.raises(ValueError, match="El subtotal no puede ser negativo"):
+        servicio.aplicar_descuento_por_volumen(subtotal=-500.0, cantidad_articulos=15)
