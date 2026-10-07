@@ -100,4 +100,17 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(0.0, impuesto, 0.001);
     }
+
+    @Test
+    void calcularImpuesto_conValoresValidos_retornaSubtotalPorTasa() {
+        // Arrange: IVA de Costa Rica
+        double subtotal = 10000.0;
+        double tasa = 0.13;
+
+        // Act
+        double impuesto = servicio.calcularImpuesto(subtotal, tasa);
+
+        // Assert
+        assertEquals(1300.0, impuesto, 0.001);
+    }
 }
