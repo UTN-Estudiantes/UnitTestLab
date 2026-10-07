@@ -258,4 +258,23 @@ class FacturacionServiceTest {
         // Assert
         assertFalse(resultado);
     }
+
+    @Test
+    void validarCedula_conNueveCaracteresNoNumericos_retornaFalse() {
+        // Arrange
+        String conLetra = "12345678A";
+        String conEspacio = "1234 5678";
+        String conGuion = "1-2345678";
+
+        // Act
+        boolean resultadoLetra = service.validarCedula(conLetra);
+        boolean resultadoEspacio = service.validarCedula(conEspacio);
+        boolean resultadoGuion = service.validarCedula(conGuion);
+
+        // Assert
+        assertAll(
+                () -> assertFalse(resultadoLetra),
+                () -> assertFalse(resultadoEspacio),
+                () -> assertFalse(resultadoGuion));
+    }
 }
