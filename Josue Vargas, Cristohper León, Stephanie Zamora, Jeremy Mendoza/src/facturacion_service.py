@@ -31,6 +31,8 @@ class FacturacionService:
         """RF-01: Calcula el subtotal de una factura sumando (precioUnitario x cantidad) de cada item."""
         if items is None:
             raise ValueError("La lista de items no puede ser nula")
+        if len(items) == 0:
+            return 0.0
 
     def calcular_impuesto(self, subtotal: float, tasa: float) -> float:
         """RF-02: Calcula el monto de impuesto (IVA) sobre un subtotal dada una tasa."""
