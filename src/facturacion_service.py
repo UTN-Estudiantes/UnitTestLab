@@ -77,6 +77,9 @@ class FacturacionService:
         if any(caracter.isalpha() for caracter in cedula):
             return False
 
+        if " " in cedula:
+            return False
+
 
 
     # --- RF-05 ---------------------------------------------------------
