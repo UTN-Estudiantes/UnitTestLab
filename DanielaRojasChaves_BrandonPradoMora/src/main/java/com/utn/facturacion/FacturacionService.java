@@ -2,7 +2,7 @@ package com.utn.facturacion;
 
 import java.util.List;
 
-/*Logica de facturacion construida con TDD*/
+/*Logica de facturacion*/
 public class FacturacionService {
 
     public double calcularSubtotal(List<ItemFactura> items) {

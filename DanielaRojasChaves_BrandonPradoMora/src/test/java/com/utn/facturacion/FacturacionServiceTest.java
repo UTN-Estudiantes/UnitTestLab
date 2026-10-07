@@ -11,18 +11,21 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-/**
- * Pruebas unitarias de FacturacionService, escritas con TDD.
- * Todas son funcionales (sin mocks): los 5 metodos son logica pura.
- */
 class FacturacionServiceTest {
 
     private FacturacionService servicio;
 
     @BeforeEach
     void setUp() {
-        // Se crea un servicio nuevo antes de CADA prueba:
-        // asi las pruebas son independientes entre si.
+        // Se crea un servicio nuevo antes de CADA prueba: asi las pruebas son independientes entre si.
         servicio = new FacturacionService();
+    }
+
+    @Test
+    void calcularSubtotal_conListaNula_lanzaError() {
+        // Arrange: lista nula (no hay nada mas que preparar)
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> servicio.calcularSubtotal(null));
     }
 }
