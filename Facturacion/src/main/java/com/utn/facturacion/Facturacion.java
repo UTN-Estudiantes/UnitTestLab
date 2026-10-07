@@ -4,11 +4,18 @@
 
 package com.utn.Facturacion;
 
+import java.util.List;
+
 /**
  *
  * @author ortiz
  */
 public class Facturacion {
+    
+    // RF-01 — calcularSubtotal(items)
+    public double calcularSubtotal(List<Item> items) {
+        throw new UnsupportedOperationException("No implementado");
+    }
     
     // RF-02 — calcularImpuesto(subtotal, tasa)
     public double calcularImpuesto(double subtotal, double tasa) {
@@ -24,4 +31,5 @@ public class Facturacion {
     public static boolean esCedulaValida(String cedula) {
         throw new UnsupportedOperationException("Pendiente");
     }
+    
 }

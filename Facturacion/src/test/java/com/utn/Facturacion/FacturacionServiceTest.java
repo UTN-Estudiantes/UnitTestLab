@@ -1,4 +1,7 @@
+package com.utn.Facturacion;
+
 import com.utn.Facturacion.Facturacion;
+import java.util.List;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -20,6 +23,66 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 public class FacturacionServiceTest {
     
+    // RF-01 — calcularSubtotal(items)
+     @Test
+    void calcularSubtotal_conListaNula_lanzaError() {
+        Facturacion service = new Facturacion();
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.calcularSubtotal(null);
+        });
+    }
+    
+    @Test
+    void calcularSubtotal_conListaVacia_retornaCero() {
+        Facturacion service = new Facturacion();
+        List<Item> itemsVacios = List.of(); 
+        
+        double subtotal = service.calcularSubtotal(itemsVacios);
+        
+        assertEquals(0.0, subtotal, 0.001);
+    }
+    
+    @Test
+    void calcularSubtotal_conItemsValidos_retornaSumaCorrecta() {
+        Facturacion service = new Facturacion();
+            List<Item> items = List.of(
+            new Item("Producto 1", 10.0, 2), 
+            new Item("Producto 2", 15.0, 3)  
+        );
+        
+        double subtotal = service.calcularSubtotal(items);
+        assertEquals(65.0, subtotal, 0.001);
+    }
+    
+    @Test
+    void calcularSubtotal_conPrecioNegativo_lanzaError() {
+        Facturacion service = new Facturacion();
+        
+        List<Item> items = List.of(
+            new Item("Producto con error", -10.0, 2)
+        );
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.calcularSubtotal(items);
+        });
+    }
+    
+    @Test
+    void calcularSubtotal_conCantidadInvalida_lanzaError() {
+        Facturacion service = new Facturacion();
+        
+        List<Item> items = List.of(
+            new Item("Producto", 10.0, 0) // Cantidad 0 (también puedes probar con -1)
+        );
+        
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.calcularSubtotal(items);
+        });
+    }
+    
+    ///////-----------------------------------------------
+
     // RF-02 — calcularImpuesto(subtotal, tasa)
     
     // Caso 1: subtotal negativo
@@ -156,7 +219,6 @@ public class FacturacionServiceTest {
 
     ///////-----------------------------------------------
  
-
     //RF-04 — validarCedula(cedula)
     @Nested
     class EsCedulaValida {
@@ -234,4 +296,6 @@ public class FacturacionServiceTest {
             assertDoesNotThrow(accion);
         }
     }
+    
+    
 }
