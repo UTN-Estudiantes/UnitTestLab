@@ -49,4 +49,14 @@ class FacturacionService:
             return cedula.isascii() and cedula.isdigit()
     
     def calcular_monto_final(self, subtotal: float, impuesto: float, descuento: float) -> float:
-        raise NotImplementedError()
+            """RF-05: Calcula el total a pagar agregando impuestos y deduciendo descuentos."""
+            if subtotal < 0 or impuesto < 0:
+                raise ValueError("El subtotal y el impuesto no pueden ser negativos.")
+            if descuento < 0:
+                raise ValueError("El descuento no puede ser negativo.")
+
+            monto_sin_descuento = subtotal + impuesto
+            if descuento > monto_sin_descuento:
+                raise ValueError("El descuento no puede superar la suma del subtotal más el impuesto.")
+
+            return monto_sin_descuento - descuento
