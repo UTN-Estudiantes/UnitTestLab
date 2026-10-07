@@ -69,4 +69,17 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> service.calcularSubtotal(items));
     }
+
+    // ===================== RF-02 calcularImpuesto =====================
+
+    @Test
+    void calcularImpuesto_conSubtotalNegativo_lanzaError() {
+        // Arrange
+        double subtotal = -1000.0;
+        double tasa = 0.13;
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularImpuesto(subtotal, tasa));
+    }
 }
