@@ -128,3 +128,15 @@ def test_calcular_impuesto_con_tasa_mayor_a_uno_lanza_value_error():
     # Act & Assert
     with pytest.raises(ValueError, match="La tasa de impuesto no puede ser mayor a 1"):
         servicio.calcular_impuesto(subtotal=1000.0, tasa=1.5)
+
+
+def test_calcular_impuesto_con_subtotal_cero_retorna_cero():
+    """RF-02: Con subtotal = 0, el impuesto debe ser 0.0 sin importar la tasa."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act
+    impuesto = servicio.calcular_impuesto(subtotal=0.0, tasa=0.13)
+
+    # Assert
+    assert impuesto == 0.0
