@@ -68,6 +68,9 @@ class FacturacionService:
         if cedula == "":
             return False
 
+        if len(cedula) < 9:
+            return False
+
 
 
     # --- RF-05 ---------------------------------------------------------
