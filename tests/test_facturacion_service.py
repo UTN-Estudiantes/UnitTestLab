@@ -265,3 +265,15 @@ def test_validar_cedula_con_guion_retorna_false(servicio):
 
     # Assert
     assert resultado is False
+
+
+def test_validar_cedula_con_9_digitos_retorna_true(servicio):
+    # Arrange
+    cedula = "123456789"
+
+    # Act
+    resultado = servicio.validar_cedula(cedula)
+
+    # Assert
+    assert resultado is True
+
