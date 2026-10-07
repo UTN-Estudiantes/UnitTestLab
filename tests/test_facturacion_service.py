@@ -137,3 +137,15 @@ def test_aplicar_descuento_por_volumen_con_cantidad_negativa_lanza_error(servici
     # Assert
     assert "cantidad" in str(error.value).lower()
 
+
+def test_aplicar_descuento_por_volumen_con_20_articulos_retorna_diez_por_ciento(servicio):
+    # Arrange
+    subtotal = 1000.0
+    cantidad_articulos = 20
+
+    # Act
+    resultado = servicio.aplicar_descuento_por_volumen(subtotal, cantidad_articulos)
+
+    # Assert
+    assert resultado == pytest.approx(100.0)
+
