@@ -84,6 +84,9 @@ public class FacturacionService {
         if (impuesto < 0) {
             throw new IllegalArgumentException("El impuesto no puede ser negativo");
         }
+        if (descuento < 0) {
+            throw new IllegalArgumentException("El descuento no puede ser negativo");
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 }
