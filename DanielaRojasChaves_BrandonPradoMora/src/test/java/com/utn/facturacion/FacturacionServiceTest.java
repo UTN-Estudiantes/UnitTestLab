@@ -24,7 +24,6 @@ class FacturacionServiceTest {
     @Test
     void calcularSubtotal_conListaNula_lanzaError() {
         // Arrange: lista nula (no hay nada mas que preparar)
-        // Act + Assert
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.calcularSubtotal(null));
     }
@@ -46,7 +45,6 @@ class FacturacionServiceTest {
         // Arrange
         List<ItemFactura> items = List.of(new ItemFactura(-500.0, 1));
 
-        // Act + Assert
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.calcularSubtotal(items));
     }
@@ -56,7 +54,6 @@ class FacturacionServiceTest {
         // Arrange: 0 es el valor limite (el primero invalido)
         List<ItemFactura> items = List.of(new ItemFactura(500.0, 0));
 
-        // Act + Assert
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.calcularSubtotal(items));
     }
@@ -78,8 +75,13 @@ class FacturacionServiceTest {
 
     @Test
     void calcularImpuesto_conSubtotalNegativo_lanzaError() {
-        // Act + Assert
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.calcularImpuesto(-100.0, 0.13));
+    }
+
+    @Test
+    void calcularImpuesto_conTasaNegativa_lanzaError() {
+        assertThrows(IllegalArgumentException.class,
+                () -> servicio.calcularImpuesto(1000.0, -0.13));
     }
 }
