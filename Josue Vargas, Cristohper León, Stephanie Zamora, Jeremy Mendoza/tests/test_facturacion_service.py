@@ -140,3 +140,15 @@ def test_calcular_impuesto_con_subtotal_cero_retorna_cero():
 
     # Assert
     assert impuesto == 0.0
+
+
+def test_calcular_impuesto_con_valores_validos_calcula_correctamente():
+    """RF-02: Con subtotal y tasa válidos, calcula subtotal * tasa."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act
+    impuesto = servicio.calcular_impuesto(subtotal=10000.0, tasa=0.13)
+
+    # Assert
+    assert impuesto == 1300.0
