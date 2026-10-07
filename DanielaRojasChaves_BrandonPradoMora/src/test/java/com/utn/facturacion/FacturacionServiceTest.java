@@ -84,4 +84,11 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.calcularImpuesto(1000.0, -0.13));
     }
+
+    @Test
+    void calcularImpuesto_conTasaMayorAUno_lanzaError() {
+        // Act + Assert: 1.5 equivale a 150%
+        assertThrows(IllegalArgumentException.class,
+                () -> servicio.calcularImpuesto(1000.0, 1.5));
+    }
 }
