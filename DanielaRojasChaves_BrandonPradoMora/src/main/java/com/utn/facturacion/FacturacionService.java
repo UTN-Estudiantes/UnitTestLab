@@ -64,6 +64,9 @@ public class FacturacionService {
     }
 
     public double calcularMontoFinal(double subtotal, double impuesto, double descuento) {
+        if (subtotal < 0) {
+            throw new IllegalArgumentException("El subtotal no puede ser negativo");
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
