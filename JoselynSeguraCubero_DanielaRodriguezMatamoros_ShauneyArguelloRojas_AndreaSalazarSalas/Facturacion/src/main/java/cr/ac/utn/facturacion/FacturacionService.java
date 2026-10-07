@@ -10,9 +10,7 @@ public class FacturacionService {
         }
         double subtotal = 0.0;
         for (Item item : items) {
-            if (item.getPrecioUnitario() < 0) {
-                throw new IllegalArgumentException("El precio unitario no puede ser negativo");
-            }
+            validarNoNegativo(item.getPrecioUnitario(), "precio unitario");
             if (item.getCantidad() <= 0) {
                 throw new IllegalArgumentException("La cantidad debe ser mayor a cero");
             }
@@ -22,12 +20,8 @@ public class FacturacionService {
     }
 
     public double calcularImpuesto(double subtotal, double tasa) {
-        if (subtotal < 0) {
-            throw new IllegalArgumentException("El subtotal no puede ser negativo");
-        }
-        if (tasa < 0) {
-            throw new IllegalArgumentException("La tasa no puede ser negativa");
-        }
+        validarNoNegativo(subtotal, "subtotal");
+        validarNoNegativo(tasa, "tasa");
         if (tasa > 1) {
             throw new IllegalArgumentException("La tasa no puede ser mayor a 1");
         }
@@ -35,12 +29,8 @@ public class FacturacionService {
     }
 
     public double aplicarDescuentoPorVolumen(double subtotal, int cantidadArticulos) {
-        if (subtotal < 0) {
-            throw new IllegalArgumentException("El subtotal no puede ser negativo");
-        }
-        if (cantidadArticulos < 0) {
-            throw new IllegalArgumentException("La cantidad de articulos no puede ser negativa");
-        }
+        validarNoNegativo(subtotal, "subtotal");
+        validarNoNegativo(cantidadArticulos, "cantidad de articulos");
         if (cantidadArticulos < 10) {
             return 0.0;
         }
@@ -66,18 +56,18 @@ public class FacturacionService {
     }
 
     public double calcularMontoFinal(double subtotal, double impuesto, double descuento) {
-        if (subtotal < 0) {
-            throw new IllegalArgumentException("El subtotal no puede ser negativo");
-        }
-        if (impuesto < 0) {
-            throw new IllegalArgumentException("El impuesto no puede ser negativo");
-        }
-        if (descuento < 0) {
-            throw new IllegalArgumentException("El descuento no puede ser negativo");
-        }
+        validarNoNegativo(subtotal, "subtotal");
+        validarNoNegativo(impuesto, "impuesto");
+        validarNoNegativo(descuento, "descuento");
         if (descuento > subtotal + impuesto) {
             throw new IllegalArgumentException("El descuento no puede ser mayor que subtotal + impuesto");
         }
         return subtotal + impuesto - descuento;
+    }
+
+    private void validarNoNegativo(double valor, String nombre) {
+        if (valor < 0) {
+            throw new IllegalArgumentException("El valor de " + nombre + " no puede ser negativo");
+        }
     }
 }
