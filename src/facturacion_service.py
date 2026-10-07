@@ -65,6 +65,10 @@ class FacturacionService:
         if cedula is None:
             return False
 
+        if cedula == "":
+            return False
+
+
 
     # --- RF-05 ---------------------------------------------------------
     def calcular_monto_final(self, subtotal: float, impuesto: float, descuento: float) -> float:
