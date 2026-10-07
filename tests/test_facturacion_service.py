@@ -124,3 +124,16 @@ def test_aplicar_descuento_por_volumen_con_subtotal_negativo_lanza_error(servici
     # Assert
     assert "subtotal" in str(error.value).lower()
 
+
+def test_aplicar_descuento_por_volumen_con_cantidad_negativa_lanza_error(servicio):
+    # Arrange
+    subtotal = 1000.0
+    cantidad_articulos = -1
+
+    # Act
+    with pytest.raises(ValueError) as error:
+        servicio.aplicar_descuento_por_volumen(subtotal, cantidad_articulos)
+
+    # Assert
+    assert "cantidad" in str(error.value).lower()
+
