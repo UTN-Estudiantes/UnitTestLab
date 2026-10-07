@@ -57,6 +57,9 @@ public class FacturacionService {
     }
 
     public boolean validarCedula(String cedula) {
+        if (cedula == null) {
+            return false;
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
