@@ -32,9 +32,20 @@ public class FacturacionService {
         return subtotal;
     }
 
-    // RF-02: calcula el impuesto del subtotal (TODO: completar reglas)
+        // RF-02
     public double calcularImpuesto(double subtotal, double tasa) {
-        throw new UnsupportedOperationException("No implementado");
+
+        if (subtotal < 0) {
+            throw new IllegalArgumentException(
+                    "El subtotal no puede ser negativo");
+        }
+
+        if (tasa < 0 || tasa > 1) {
+            throw new IllegalArgumentException(
+                    "La tasa debe estar entre 0 y 1");
+        }
+
+        return subtotal * tasa;
     }
 
     // RF-03: descuento según la cantidad de artículos (TODO: completar reglas)
