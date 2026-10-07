@@ -224,3 +224,15 @@ def test_validar_cedula_con_none_retorna_false():
 
     # Assert
     assert resultado is False
+
+
+def test_validar_cedula_con_cadena_vacia_retorna_false():
+    """RF-04: Si cedula es cadena vacía, debe devolver False."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act
+    resultado = servicio.validar_cedula(cedula="")
+
+    # Assert
+    assert resultado is False
