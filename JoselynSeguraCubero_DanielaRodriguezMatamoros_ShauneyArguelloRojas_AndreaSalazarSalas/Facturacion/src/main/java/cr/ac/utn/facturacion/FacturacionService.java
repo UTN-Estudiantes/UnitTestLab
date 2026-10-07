@@ -90,6 +90,6 @@ public class FacturacionService {
         if (descuento > subtotal + impuesto) {
             throw new IllegalArgumentException("El descuento no puede ser mayor que subtotal + impuesto");
         }
-        throw new UnsupportedOperationException("No implementado");
+        return subtotal + impuesto - descuento;
     }
 }
