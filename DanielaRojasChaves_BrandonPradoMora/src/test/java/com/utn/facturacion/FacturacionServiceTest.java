@@ -213,4 +213,11 @@ class FacturacionServiceTest {
         // Assert
         assertTrue(resultado);
     }
+
+    @Test
+    void calcularMontoFinal_conSubtotalNegativo_lanzaError() {
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> servicio.calcularMontoFinal(-1.0, 130.0, 0.0));
+    }
 }
