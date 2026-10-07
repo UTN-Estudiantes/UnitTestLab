@@ -335,3 +335,17 @@ def test_calcular_monto_final_con_descuento_mayor_a_subtotal_mas_impuesto_lanza_
 
     # Assert
     assert "descuento" in str(error.value).lower()
+
+
+def test_calcular_monto_final_con_valores_validos_retorna_subtotal_mas_impuesto_menos_descuento(servicio):
+    # Arrange
+    subtotal = 1000.0
+    impuesto = 130.0
+    descuento = 50.0
+
+    # Act
+    resultado = servicio.calcular_monto_final(subtotal, impuesto, descuento)
+
+    # Assert
+    assert resultado == pytest.approx(1080.0)
+
