@@ -11,6 +11,7 @@ public class FacturacionService {
         if (items.isEmpty()) {
             return 0.0;
         }
+        double subtotal = 0.0;
         for (Item item : items) {
             if (item.getPrecioUnitario() < 0) {
                 throw new IllegalArgumentException("El precio unitario no puede ser negativo");
@@ -18,8 +19,9 @@ public class FacturacionService {
             if (item.getCantidad() <= 0) {
                 throw new IllegalArgumentException("La cantidad debe ser mayor a cero");
             }
+            subtotal += item.getPrecioUnitario() * item.getCantidad();
         }
-        throw new UnsupportedOperationException("No implementado");
+        return subtotal;
     }
 
     public double calcularImpuesto(double subtotal, double tasa) {
