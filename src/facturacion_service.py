@@ -48,6 +48,9 @@ class FacturacionService:
         if subtotal < 0:
             raise ValueError("El subtotal no puede ser negativo")
 
+        if cantidad_articulos < 0:
+            raise ValueError("La cantidad de articulos no puede ser negativa")
+
 
 
     # --- RF-04 ---------------------------------------------------------
