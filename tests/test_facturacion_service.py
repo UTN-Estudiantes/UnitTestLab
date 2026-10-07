@@ -32,3 +32,11 @@ def test_calcular_subtotal_con_cantidad_invalida_lanza_error(servicio, cantidad)
     items = [Item(precio_unitario=10.0, cantidad=cantidad)]
     with pytest.raises(ValueError):
         servicio.calcular_subtotal(items)
+
+
+def test_calcular_subtotal_con_lista_valida_retorna_suma(servicio):
+    items = [
+        Item(precio_unitario=10.0, cantidad=2),
+        Item(precio_unitario=5.5, cantidad=3),
+    ]
+    assert servicio.calcular_subtotal(items) == 36.5
