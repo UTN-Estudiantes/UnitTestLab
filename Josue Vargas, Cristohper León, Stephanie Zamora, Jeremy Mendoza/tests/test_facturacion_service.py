@@ -303,3 +303,13 @@ def test_calcular_monto_final_con_valores_negativos_lanza_value_error():
 
     with pytest.raises(ValueError, match="Los montos no pueden ser negativos"):
         servicio.calcular_monto_final(subtotal=100.0, impuesto=13.0, descuento=-5.0)
+
+
+def test_calcular_monto_final_con_descuento_mayor_al_total_lanza_value_error():
+    """RF-05: Si descuento es mayor que (subtotal + impuesto), debe lanzar ValueError."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act & Assert
+    with pytest.raises(ValueError, match="El descuento no puede ser mayor que el total a pagar"):
+        servicio.calcular_monto_final(subtotal=1000.0, impuesto=130.0, descuento=1200.0)
