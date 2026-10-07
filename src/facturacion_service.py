@@ -21,6 +21,8 @@ class FacturacionService:
     def calcular_subtotal(self, items: Optional[List[Item]]) -> float:
         if items is None:
             raise ValueError("La lista de items no puede ser None")
+        if len(items) == 0:
+            return 0.0
 
 
     # --- RF-02 ---------------------------------------------------------
