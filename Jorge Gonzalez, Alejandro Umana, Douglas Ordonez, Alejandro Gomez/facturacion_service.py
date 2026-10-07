@@ -40,9 +40,13 @@ class FacturacionService:
                 return subtotal * 0.05
 
             return 0.0
-    
+        
     def validar_cedula(self, cedula: Optional[str]) -> bool:
-        raise NotImplementedError()
+            """RF-04: Valida si una cédula costarricense consta de exactamente 9 dígitos numéricos."""
+            if not cedula or len(cedula) != 9:
+                return False
+
+            return cedula.isascii() and cedula.isdigit()
     
     def calcular_monto_final(self, subtotal: float, impuesto: float, descuento: float) -> float:
         raise NotImplementedError()
