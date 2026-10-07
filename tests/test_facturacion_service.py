@@ -97,3 +97,14 @@ def test_calcular_impuesto_con_subtotal_cero_retorna_cero(servicio):
     assert resultado == 0.0
 
 
+def test_calcular_impuesto_con_valores_validos_retorna_subtotal_por_tasa(servicio):
+    # Arrange
+    subtotal = 1000.0
+    tasa = 0.13
+
+    # Act
+    resultado = servicio.calcular_impuesto(subtotal, tasa)
+
+    # Assert
+    assert resultado == pytest.approx(130.0)
+
