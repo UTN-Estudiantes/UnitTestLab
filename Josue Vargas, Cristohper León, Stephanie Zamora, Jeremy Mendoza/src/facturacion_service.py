@@ -73,6 +73,7 @@ class FacturacionService:
             return 0.0
         if 10 <= cantidad_articulos <= 19:
             return round(float(subtotal) * 0.05, 2)
+        return round(float(subtotal) * 0.10, 2)
 
     def validar_cedula(self, cedula: Optional[str]) -> bool:
         """RF-04: Valida el formato de cédula física costarricense (9 dígitos numéricos)."""
