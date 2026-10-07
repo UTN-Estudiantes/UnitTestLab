@@ -164,3 +164,53 @@ class TestFacturacionService(unittest.TestCase):
         descuento = self.service.aplicar_descuento_por_volumen(subtotal, cantidad)
         # assert
         self.assertEqual(descuento, 1000.0)
+
+# PRUEBAS RF-04 — validarCedula(cedula)
+
+    def test_validar_cedula_con_nueve_digitos(self):
+        cedula = "208710996"
+        resultado= self.service.validar_cedula(cedula)
+        self.assertTrue(resultado)
+
+ 
+    def test_validar_cedula_con_cedula_nula(self):
+        cedula = None
+        resultado = self.service.validar_cedula(cedula)
+        self.assertFalse(resultado)
+
+
+    def validar_cedula_con_cadena_vacia(self):
+        cedula = ""
+        resultado = self.service.validar_cedula(cedula)
+        self.assertFalse(resultado)
+
+ 
+    def test_validar_cedula_con_menos_de_nueve_caracteres(self):
+        cedula = "208710996"
+        resultado = self.service.validar_cedula(cedula)
+        self.assertFalse(resultado)
+
+ 
+    def test_validar_cedula_con_mas_de_nueve_caracteres(self):
+        cedula = "2087109965"
+        resultado = self.service.validar_cedula(cedula)
+        self.assertFalse(resultado)
+
+
+    def test_validar_cedula_con_letras(self):
+        cedula = "208710996ALEJANDRO"
+        resultado = self.service.validar_cedula(cedula)
+        self.assertFalse(resultado)
+
+    def test_validar_cedula_con_espacio(self):
+        cedula = "20871 0996"
+        resultado= self.service.validar_cedula(cedula)
+        self.assertFalse(resultado)
+
+    def test_validar_cedula_con_digitos_unicode(self):
+        cedula = "\u0661\u0662\u0663\u0664\u0665\u0666\u0667\u0668\u0669"
+        resultado = self.service.validar_cedula(cedula)
+        self.assertFalse(resultado)
+
+        
+
