@@ -9,6 +9,9 @@ public class FacturacionService {
         if (items == null) {
             throw new IllegalArgumentException("La lista de items no puede ser nula");
         }
+        if (items.isEmpty()) {
+            return 0.0;
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
