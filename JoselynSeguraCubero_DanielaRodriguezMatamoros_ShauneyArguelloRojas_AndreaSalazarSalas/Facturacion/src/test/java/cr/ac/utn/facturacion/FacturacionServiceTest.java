@@ -22,9 +22,29 @@ class FacturacionServiceTest {
     // ===================== RF-01 calcularSubtotal =====================
 
     @Test
-    void calcularSubtotal_conListaNula_lanzaError() {
+    public double calcularSubtotal(List<Item> items) {
+    if (items == null) {
+        throw new IllegalArgumentException("La lista de items no puede ser nula");
+    }
+    throw new UnsupportedOperationException("No implementado");
+    }
+    
+    @Test
+    void calcularSubtotal_conListaVacia_retornaCero() {
         // Arrange
-        List<Item> items = null;
+        List<Item> items = new ArrayList<>();
+
+        // Act
+        double resultado = service.calcularSubtotal(items);
+
+        // Assert
+        assertEquals(0.0, resultado, DELTA);
+    }
+    
+     @Test
+    void calcularSubtotal_conPrecioNegativo_lanzaError() {
+        // Arrange
+        List<Item> items = List.of(new Item(-100.0, 2));
 
         // Act + Assert
         assertThrows(IllegalArgumentException.class,
