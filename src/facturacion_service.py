@@ -57,6 +57,8 @@ class FacturacionService:
         if cantidad_articulos >= 10:
             return subtotal * 0.05
 
+        return 0.0
+
 
     # --- RF-04 ---------------------------------------------------------
     def validar_cedula(self, cedula: Optional[str]) -> bool:

@@ -173,3 +173,14 @@ def test_aplicar_descuento_por_volumen_con_9_articulos_retorna_cero(servicio):
     # Assert
     assert resultado == 0.0
 
+
+def test_aplicar_descuento_por_volumen_con_19_articulos_retorna_cinco_por_ciento(servicio):
+    # Arrange
+    subtotal = 1000.0
+    cantidad_articulos = 19
+
+    # Act
+    resultado = servicio.aplicar_descuento_por_volumen(subtotal, cantidad_articulos)
+
+    # Assert
+    assert resultado == pytest.approx(50.0)
