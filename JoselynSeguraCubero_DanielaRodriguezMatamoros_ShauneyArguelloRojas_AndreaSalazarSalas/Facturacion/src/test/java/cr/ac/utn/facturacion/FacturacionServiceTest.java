@@ -108,4 +108,15 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> service.calcularImpuesto(subtotal, tasa));
     }
+
+    @Test
+    void calcularImpuesto_conTasaMayorAUno_lanzaError() {
+        // Arrange
+        double subtotal = 1000.0;
+        double tasa = 1.01;
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularImpuesto(subtotal, tasa));
+    }
 }
