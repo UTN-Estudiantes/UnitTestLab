@@ -159,4 +159,13 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(100.0, descuento, 0.001);
     }
+    
+    @Test
+    void validarCedula_conCedulaNula_retornaFalse() {
+        // Act
+        boolean resultado = servicio.validarCedula(null);
+
+        // Assert: si el metodo lanzara un error, la prueba fallaria
+        assertFalse(resultado);
+    }
 }
