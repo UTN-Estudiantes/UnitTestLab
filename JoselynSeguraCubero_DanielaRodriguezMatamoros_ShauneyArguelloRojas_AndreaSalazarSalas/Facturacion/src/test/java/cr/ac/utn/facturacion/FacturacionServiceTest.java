@@ -182,4 +182,17 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(0.0, resultado, DELTA);
     }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conDiezArticulos_retornaCincoPorciento() {
+        // Arrange
+        double subtotal = 10000.0;
+        int cantidadArticulos = 10;
+
+        // Act
+        double resultado = service.aplicarDescuentoPorVolumen(subtotal, cantidadArticulos);
+
+        // Assert
+        assertEquals(500.0, resultado, DELTA);
+    }
 }
