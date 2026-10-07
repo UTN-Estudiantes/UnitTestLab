@@ -260,3 +260,14 @@ def test_validar_cedula_con_mas_de_nueve_caracteres_retorna_false():
 
     # Assert
     assert resultado is False
+
+
+def test_validar_cedula_con_caracteres_no_numericos_retorna_false():
+    """RF-04: Si contiene letras, espacios o guiones, debe devolver False."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act & Assert
+    assert servicio.validar_cedula(cedula="1-0987-065") is False
+    assert servicio.validar_cedula(cedula="10987065A") is False
+    assert servicio.validar_cedula(cedula="10987 065") is False
