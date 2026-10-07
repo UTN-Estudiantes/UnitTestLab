@@ -92,6 +92,65 @@ public class FacturacionServiceTest {
         // Assert
         assertEquals(22000.0, resultado, DELTA);
     }
+    
+    // =====================================================================
+    // RF-02 — calcularImpuesto(subtotal, tasa)
+    // =====================================================================
+
+    @Test
+    void calcularImpuesto_conSubtotalNegativo_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularImpuesto(-1000, 0.13));
+    }
+
+    @Test
+    void calcularImpuesto_conTasaNegativa_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularImpuesto(1000, -0.13));
+    }
+
+    @Test
+    void calcularImpuesto_conTasaMayorAUno_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularImpuesto(1000, 1.5));
+    }
+
+    @Test
+    void calcularImpuesto_conSubtotalCero_retornaCero() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.calcularImpuesto(0, 0.13);
+
+        // Assert
+        assertEquals(0.0, resultado, DELTA);
+    }
+
+    @Test
+    void calcularImpuesto_conValoresValidos_retornaSubtotalPorTasa() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.calcularImpuesto(10000, 0.13);
+
+        // Assert
+        assertEquals(1300.0, resultado, DELTA);
+    }
+
 }
 
 
