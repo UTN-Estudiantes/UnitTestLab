@@ -51,6 +51,8 @@ class FacturacionService:
         if cantidad_articulos < 0:
             raise ValueError("La cantidad de articulos no puede ser negativa")
 
+        if cantidad_articulos >= 20:
+            return subtotal * 0.10
 
 
     # --- RF-04 ---------------------------------------------------------
