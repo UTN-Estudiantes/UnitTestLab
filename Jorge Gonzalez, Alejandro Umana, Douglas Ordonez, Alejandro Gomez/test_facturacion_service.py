@@ -212,5 +212,30 @@ class TestFacturacionService(unittest.TestCase):
         resultado = self.service.validar_cedula(cedula)
         self.assertFalse(resultado)
 
-        
+# PRUEBAS RF-05 — calcularMontoFinal(subtotal, impuesto, descuento)
+
+    def test_subtotal_o_impuesto_negativo_lanza_error():
+        with pytest.raises(ValueError):
+            calcular_monto_final(-100.0, 13.0, 0.0)
+        with pytest.raises(ValueError):
+            calcular_monto_final(100.0, -13.0, 0.0)
+
+
+    def test_descuento_negativo_lanza_error():
+        with pytest.raises(ValueError):
+            calcular_monto_final(100.0, 13.0, -5.0)
+
+
+    def test_descuento_mayor_que_subtotal_mas_impuesto_lanza_error():
+        with pytest.raises(ValueError):
+            calcular_monto_final(100.0, 13.0, 113.01)
+
+
+    def test_valores_validos_calcula_monto_final():
+        assert calcular_monto_final(100.0, 13.0, 20.0) == pytest.approx(93.0)
+
+
+    def test_descuento_igual_a_subtotal_mas_impuesto_da_cero():
+        assert calcular_monto_final(100.0, 13.0, 113.0) == 0.0
+            
 
