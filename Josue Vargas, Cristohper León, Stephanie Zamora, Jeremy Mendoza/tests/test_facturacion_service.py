@@ -313,3 +313,15 @@ def test_calcular_monto_final_con_descuento_mayor_al_total_lanza_value_error():
     # Act & Assert
     with pytest.raises(ValueError, match="El descuento no puede ser mayor que el total a pagar"):
         servicio.calcular_monto_final(subtotal=1000.0, impuesto=130.0, descuento=1200.0)
+
+
+def test_calcular_monto_final_con_descuento_igual_al_total_retorna_cero():
+    """RF-05: Si descuento es exactamente igual a (subtotal + impuesto), retorna 0.0."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act
+    total = servicio.calcular_monto_final(subtotal=1000.0, impuesto=130.0, descuento=1130.0)
+
+    # Assert
+    assert total == 0.0
