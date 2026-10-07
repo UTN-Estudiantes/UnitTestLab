@@ -353,4 +353,18 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(10800.0, resultado, DELTA);
     }
+
+    @Test
+    void calcularMontoFinal_conDescuentoIgualAlTotal_retornaCero() {
+        // Arrange
+        double subtotal = 100.0;
+        double impuesto = 13.0;
+        double descuento = 113.0;
+
+        // Act
+        double resultado = service.calcularMontoFinal(subtotal, impuesto, descuento);
+
+        // Assert
+        assertEquals(0.0, resultado, DELTA);
+    }
 }
