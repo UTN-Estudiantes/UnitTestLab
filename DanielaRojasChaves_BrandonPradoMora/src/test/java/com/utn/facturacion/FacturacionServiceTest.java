@@ -113,4 +113,11 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(1300.0, impuesto, 0.001);
     }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conSubtotalNegativo_lanzaError() {
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> servicio.aplicarDescuentoPorVolumen(-100.0, 15));
+    }
 }
