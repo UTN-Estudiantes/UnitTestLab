@@ -11,6 +11,11 @@ public class FacturacionService {
         if (items.isEmpty()) {
             return 0.0;
         }
+        for (Item item : items) {
+            if (item.getPrecioUnitario() < 0) {
+                throw new IllegalArgumentException("El precio unitario no puede ser negativo");
+            }
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
