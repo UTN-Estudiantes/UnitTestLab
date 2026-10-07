@@ -169,4 +169,17 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> service.aplicarDescuentoPorVolumen(subtotal, cantidadArticulos));
     }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conNueveArticulos_retornaCero() {
+        // Arrange
+        double subtotal = 10000.0;
+        int cantidadArticulos = 9;
+
+        // Act
+        double resultado = service.aplicarDescuentoPorVolumen(subtotal, cantidadArticulos);
+
+        // Assert
+        assertEquals(0.0, resultado, DELTA);
+    }
 }
