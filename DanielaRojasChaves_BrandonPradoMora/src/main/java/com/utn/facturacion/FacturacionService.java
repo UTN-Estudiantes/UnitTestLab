@@ -76,7 +76,7 @@ public class FacturacionService {
         if (descuento > subtotal + impuesto) {
             throw new IllegalArgumentException("El descuento no puede ser mayor que el monto a pagar");
         }
-        throw new UnsupportedOperationException("No implementado");
+        return subtotal + impuesto - descuento;
     }
 
     private void validarItem(ItemFactura item) {
