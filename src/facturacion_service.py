@@ -62,7 +62,10 @@ class FacturacionService:
 
     # --- RF-04 ---------------------------------------------------------
     def validar_cedula(self, cedula: Optional[str]) -> bool:
-        pass
+        if cedula is None:
+            return False
+
+
     # --- RF-05 ---------------------------------------------------------
     def calcular_monto_final(self, subtotal: float, impuesto: float, descuento: float) -> float:
         pass
