@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package cr.ac.utn.facturacion;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class FacturacionServiceTest {
 
+    private static final double DELTA = 0.0001;
     private FacturacionService service;
 
     @BeforeEach
@@ -22,13 +19,15 @@ class FacturacionServiceTest {
     // ===================== RF-01 calcularSubtotal =====================
 
     @Test
-    public double calcularSubtotal(List<Item> items) {
-    if (items == null) {
-        throw new IllegalArgumentException("La lista de items no puede ser nula");
+    void calcularSubtotal_conListaNula_lanzaError() {
+        // Arrange
+        List<Item> items = null;
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularSubtotal(items));
     }
-    throw new UnsupportedOperationException("No implementado");
-    }
-    
+
     @Test
     void calcularSubtotal_conListaVacia_retornaCero() {
         // Arrange
@@ -40,8 +39,8 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(0.0, resultado, DELTA);
     }
-    
-     @Test
+
+    @Test
     void calcularSubtotal_conPrecioNegativo_lanzaError() {
         // Arrange
         List<Item> items = List.of(new Item(-100.0, 2));
@@ -51,4 +50,3 @@ class FacturacionServiceTest {
                 () -> service.calcularSubtotal(items));
     }
 }
-
