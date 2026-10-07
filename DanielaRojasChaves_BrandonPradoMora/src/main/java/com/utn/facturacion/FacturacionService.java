@@ -24,6 +24,9 @@ public class FacturacionService {
         if (tasa < 0) {
             throw new IllegalArgumentException("La tasa no puede ser negativa");
         }
+        if (tasa > 1) {
+            throw new IllegalArgumentException("La tasa no puede ser mayor a 1 (100%)");
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
