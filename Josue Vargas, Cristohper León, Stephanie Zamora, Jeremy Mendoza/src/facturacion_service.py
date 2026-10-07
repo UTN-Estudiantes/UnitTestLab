@@ -29,7 +29,8 @@ class FacturacionService:
 
     def calcular_subtotal(self, items: Optional[List[Union[ItemFactura, dict]]]) -> float:
         """RF-01: Calcula el subtotal de una factura sumando (precioUnitario x cantidad) de cada item."""
-        pass
+        if items is None:
+            raise ValueError("La lista de items no puede ser nula")
 
     def calcular_impuesto(self, subtotal: float, tasa: float) -> float:
         """RF-02: Calcula el monto de impuesto (IVA) sobre un subtotal dada una tasa."""
