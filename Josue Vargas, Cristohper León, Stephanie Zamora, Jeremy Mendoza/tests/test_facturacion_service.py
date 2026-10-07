@@ -283,3 +283,23 @@ def test_validar_cedula_con_nueve_digitos_exactos_retorna_true():
 
     # Assert
     assert resultado is True
+
+
+# =============================================================================
+# RF-05: Cálculo del monto final (Funcional)
+# =============================================================================
+
+def test_calcular_monto_final_con_valores_negativos_lanza_value_error():
+    """RF-05: Si subtotal, impuesto o descuento es negativo, debe lanzar ValueError."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act & Assert
+    with pytest.raises(ValueError, match="Los montos no pueden ser negativos"):
+        servicio.calcular_monto_final(subtotal=-100.0, impuesto=13.0, descuento=0.0)
+
+    with pytest.raises(ValueError, match="Los montos no pueden ser negativos"):
+        servicio.calcular_monto_final(subtotal=100.0, impuesto=-13.0, descuento=0.0)
+
+    with pytest.raises(ValueError, match="Los montos no pueden ser negativos"):
+        servicio.calcular_monto_final(subtotal=100.0, impuesto=13.0, descuento=-5.0)
