@@ -48,10 +48,31 @@ public class FacturacionService {
         return subtotal * tasa;
     }
 
-    // RF-03: descuento según la cantidad de artículos (TODO: completar reglas)
-    public double aplicarDescuentoPorVolumen(double subtotal, int cantidadArticulos) {
-        throw new UnsupportedOperationException("No implementado");
+    // RF-03
+    public double aplicarDescuentoPorVolumen(
+            double subtotal, int cantidadArticulos) {
+
+        if (subtotal < 0) {
+            throw new IllegalArgumentException(
+                    "El subtotal no puede ser negativo");
+        }
+
+        if (cantidadArticulos < 0) {
+            throw new IllegalArgumentException(
+                    "La cantidad de artículos no puede ser negativa");
+        }
+
+        if (cantidadArticulos < 10) {
+            return 0.0;
+        }
+
+        if (cantidadArticulos < 20) {
+            return subtotal * 0.05;
+        }
+
+        return subtotal * 0.10;
     }
+
 
     // RF-04: true si la cédula tiene exactamente 9 dígitos.
     // Nunca lanza error: null, vacía o con letras/espacios/guiones da false.
