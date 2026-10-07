@@ -62,4 +62,10 @@ public class FacturacionService {
         }
         return 0.0;
     }
+    
+
+    // RF-04
+    public boolean validarCedula(String cedula) {
+        throw new UnsupportedOperationException();
+    }
 }

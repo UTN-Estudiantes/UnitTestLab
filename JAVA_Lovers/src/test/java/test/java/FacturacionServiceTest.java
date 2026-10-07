@@ -3,7 +3,9 @@ import java.util.ArrayList;
 import java.util.List;
 import main.java.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
 class FacturacionServiceTest {
@@ -216,4 +218,103 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(1000.0, descuento, DELTA);
     }
+    
+        // RF-04 validarCedula 
+
+    @Test
+    void validarCedula_ConCedulaNula_RetornaFalse() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        boolean resultado = servicio.validarCedula(null);
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_ConCadenaVacia_RetornaFalse() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        boolean resultado = servicio.validarCedula("");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_ConMenosDeNueveCaracteres_RetornaFalse() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        boolean resultado = servicio.validarCedula("12345678");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_ConMasDeNueveCaracteres_RetornaFalse() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        boolean resultado = servicio.validarCedula("1234567890");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_ConLetraEnNueveCaracteres_RetornaFalse() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        boolean resultado = servicio.validarCedula("12345678A");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_ConEspacioEnNueveCaracteres_RetornaFalse() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        boolean resultado = servicio.validarCedula("1234 5678");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_ConGuionEnNueveCaracteres_RetornaFalse() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        boolean resultado = servicio.validarCedula("1-1234-56");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_ConNueveDigitos_RetornaTrue() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        boolean resultado = servicio.validarCedula("123456789");
+
+        // Assert
+        assertTrue(resultado);
+    }
+
 }
