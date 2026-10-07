@@ -222,4 +222,16 @@ class FacturacionServiceTest {
         // Assert
         assertFalse(resultado);
     }
+
+    @Test
+    void validarCedula_conVacia_retornaFalse() {
+        // Arrange
+        String cedula = "";
+
+        // Act
+        boolean resultado = service.validarCedula(cedula);
+
+        // Assert
+        assertFalse(resultado);
+    }
 }
