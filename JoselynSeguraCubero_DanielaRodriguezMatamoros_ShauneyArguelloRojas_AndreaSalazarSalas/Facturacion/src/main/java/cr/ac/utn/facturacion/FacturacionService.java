@@ -8,9 +8,6 @@ public class FacturacionService {
         if (items == null) {
             throw new IllegalArgumentException("La lista de items no puede ser nula");
         }
-        if (items.isEmpty()) {
-            return 0.0;
-        }
         double subtotal = 0.0;
         for (Item item : items) {
             if (item.getPrecioUnitario() < 0) {
