@@ -67,6 +67,8 @@ class FacturacionService:
         """RF-03: Calcula el monto del descuento por volumen de compra."""
         if subtotal < 0:
             raise ValueError("El subtotal no puede ser negativo")
+        if cantidad_articulos < 0:
+            raise ValueError("La cantidad de articulos no puede ser negativa")
 
     def validar_cedula(self, cedula: Optional[str]) -> bool:
         """RF-04: Valida el formato de cédula física costarricense (9 dígitos numéricos)."""
