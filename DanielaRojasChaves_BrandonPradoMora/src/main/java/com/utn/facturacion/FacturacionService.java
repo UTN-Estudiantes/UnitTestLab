@@ -2,8 +2,13 @@ package com.utn.facturacion;
 
 import java.util.List;
 
+
 /*Logica de facturacion*/
 public class FacturacionService {
+    private static final int MINIMO_DESCUENTO_MEDIO = 10;
+    private static final int MINIMO_DESCUENTO_ALTO = 20;
+    private static final double DESCUENTO_MEDIO = 0.05;
+    private static final double DESCUENTO_ALTO = 0.10;
 
     public double calcularSubtotal(List<ItemFactura> items) {
         if (items == null) {
@@ -37,13 +42,13 @@ public class FacturacionService {
         if (cantidadArticulos < 0) {
             throw new IllegalArgumentException("La cantidad de articulos no puede ser negativa");
         }
-        if (cantidadArticulos < 10) {
+        if (cantidadArticulos < MINIMO_DESCUENTO_MEDIO) {
             return 0.0;
         }
-        if (cantidadArticulos < 20) {
-            return subtotal * 0.05;
+        if (cantidadArticulos < MINIMO_DESCUENTO_ALTO) {
+            return subtotal * DESCUENTO_MEDIO;
         }
-        return subtotal * 0.10;
+        return subtotal * DESCUENTO_ALTO;
     }
 
     public boolean validarCedula(String cedula) {
