@@ -37,7 +37,7 @@ public class FacturacionService {
         if (subtotal == 0) {
             return 0.0;
         }
-        throw new UnsupportedOperationException("No implementado");
+        return subtotal * tasa;
     }
 
     public double aplicarDescuentoPorVolumen(double subtotal, int cantidadArticulos) {
