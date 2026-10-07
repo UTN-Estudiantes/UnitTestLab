@@ -242,4 +242,14 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.calcularMontoFinal(1000.0, 130.0, 2000.0));
     }
+
+    @Test
+    void calcularMontoFinal_conDescuentoIgualAlTotal_retornaCero() {
+        // Arrange: caso limite VALIDO, descuento == subtotal + impuesto
+        // Act
+        double monto = servicio.calcularMontoFinal(1000.0, 130.0, 1130.0);
+
+        // Assert
+        assertEquals(0.0, monto, 0.001);
+    }
 }
