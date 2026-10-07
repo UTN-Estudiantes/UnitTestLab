@@ -79,6 +79,8 @@ class FacturacionService:
         """RF-04: Valida el formato de cédula física costarricense (9 dígitos numéricos)."""
         if cedula is None or len(cedula) != 9:
             return False
+        if not cedula.isdigit():
+            return False
 
     def calcular_monto_final(self, subtotal: float, impuesto: float, descuento: float) -> float:
         """RF-05: Calcula el monto final a pagar combinando subtotal, impuesto y descuento."""
