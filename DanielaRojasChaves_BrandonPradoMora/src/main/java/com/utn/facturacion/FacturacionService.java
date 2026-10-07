@@ -40,6 +40,9 @@ public class FacturacionService {
         if (cantidadArticulos < 10) {
             return 0.0;
         }
+        if (cantidadArticulos < 20) {
+            return subtotal * 0.05;
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
