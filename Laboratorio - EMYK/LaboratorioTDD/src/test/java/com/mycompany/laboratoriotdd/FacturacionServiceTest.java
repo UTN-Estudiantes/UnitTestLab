@@ -310,8 +310,74 @@ public class FacturacionServiceTest {
         // Assert
         assertTrue(resultado);
     }
+    
+    // =====================================================================
+    // RF-05 — calcularMontoFinal(subtotal, impuesto, descuento)
+    // =====================================================================
 
+    @Test
+    void calcularMontoFinal_conSubtotalNegativo_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
 
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularMontoFinal(-1000, 130, 0));
+    }
+
+    @Test
+    void calcularMontoFinal_conImpuestoNegativo_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularMontoFinal(1000, -130, 0));
+    }
+
+    @Test
+    void calcularMontoFinal_conDescuentoNegativo_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularMontoFinal(1000, 130, -50));
+    }
+
+    @Test
+    void calcularMontoFinal_conDescuentoMayorAlTotal_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularMontoFinal(1000, 130, 2000));
+    }
+
+    @Test
+    void calcularMontoFinal_conValoresValidos_retornaSubtotalMasImpuestoMenosDescuento() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.calcularMontoFinal(10000, 1300, 500);
+
+        // Assert
+        assertEquals(10800.0, resultado, DELTA);
+    }
+
+    @Test
+    void calcularMontoFinal_conDescuentoIgualAlTotal_retornaCero() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.calcularMontoFinal(1000, 130, 1130);
+
+        // Assert
+        assertEquals(0.0, resultado, DELTA);
+    }
 }
 
 
