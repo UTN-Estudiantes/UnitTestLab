@@ -19,7 +19,9 @@ class FacturacionService:
 
     # --- RF-01 ---------------------------------------------------------
     def calcular_subtotal(self, items: Optional[List[Item]]) -> float:
-        pass
+        if items is None:
+            raise ValueError("La lista de items no puede ser None")
+
 
     # --- RF-02 ---------------------------------------------------------
     def calcular_impuesto(self, subtotal: float, tasa: float) -> float:
