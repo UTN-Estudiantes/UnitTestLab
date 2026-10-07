@@ -97,3 +97,8 @@ class FacturacionService:
 
         if descuento < 0:
             raise ValueError("El descuento no puede ser negativo")
+        
+        if descuento > subtotal + impuesto:
+            raise ValueError(
+                "El descuento no puede ser mayor que el subtotal mas el impuesto"
+            )
