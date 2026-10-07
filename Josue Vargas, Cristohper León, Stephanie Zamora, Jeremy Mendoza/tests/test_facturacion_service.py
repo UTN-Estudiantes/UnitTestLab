@@ -94,3 +94,17 @@ def test_calcular_subtotal_con_varios_items_suma_correctamente():
 
 
 
+
+
+# =============================================================================
+# RF-02: Cálculo de impuesto (Funcional)
+# =============================================================================
+
+def test_calcular_impuesto_con_subtotal_negativo_lanza_value_error():
+    """RF-02: Si el subtotal es negativo, debe lanzar ValueError."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act & Assert
+    with pytest.raises(ValueError, match="El subtotal no puede ser negativo"):
+        servicio.calcular_impuesto(subtotal=-100.0, tasa=0.13)
