@@ -74,7 +74,7 @@ public class FacturacionService {
                 return false;
             }
         }
-        throw new UnsupportedOperationException("No implementado");
+        return true;
     }
 
     public double calcularMontoFinal(double subtotal, double impuesto, double descuento) {
