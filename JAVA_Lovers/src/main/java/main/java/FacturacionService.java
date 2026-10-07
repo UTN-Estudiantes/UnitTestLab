@@ -81,6 +81,13 @@ public class FacturacionService {
   
     // RF-05
     public double calcularMontoFinal(double subtotal, double impuesto, double descuento) {
-        throw new UnsupportedOperationException();
+        if (subtotal < 0 || impuesto < 0 || descuento < 0) {
+            throw new IllegalArgumentException("Subtotal, impuesto y descuento no pueden ser negativos");
+        }
+        if (descuento > subtotal + impuesto) {
+            throw new IllegalArgumentException("El descuento no puede ser mayor que subtotal + impuesto");
+        }
+        return subtotal + impuesto - descuento;
     }
+    
 }
