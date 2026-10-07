@@ -236,3 +236,15 @@ def test_validar_cedula_con_cadena_vacia_retorna_false():
 
     # Assert
     assert resultado is False
+
+
+def test_validar_cedula_con_menos_de_nueve_caracteres_retorna_false():
+    """RF-04: Si cedula tiene menos de 9 caracteres, debe devolver False."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act
+    resultado = servicio.validar_cedula(cedula="10987654")
+
+    # Assert
+    assert resultado is False
