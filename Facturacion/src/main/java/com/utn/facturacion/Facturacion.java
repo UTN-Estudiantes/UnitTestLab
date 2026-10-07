@@ -9,7 +9,12 @@ package com.utn.Facturacion;
  * @author ortiz
  */
 public class Facturacion {
-
+    
+    // RF-02 — calcularImpuesto(subtotal, tasa)
+    public double calcularImpuesto(double subtotal, double tasa) {
+        throw new UnsupportedOperationException();
+    }
+    
     //RF-03 — aplicarDescuentoPorVolumen(subtotal, cantidadArticulos)
      public double aplicarDescuentoPorVolumen(double subtotal, int cantidadArticulos) {
         throw new UnsupportedOperationException("No implementado");

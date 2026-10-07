@@ -1,4 +1,3 @@
-
 import com.utn.Facturacion.Facturacion;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -7,6 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,6 +19,67 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author ortiz
  */
 public class FacturacionServiceTest {
+    
+    // RF-02 — calcularImpuesto(subtotal, tasa)
+    
+    // Caso 1: subtotal negativo
+    @Test
+    public void calcularImpuesto_conSubtotalNegativo_lanzaError() {
+
+        Facturacion service = new Facturacion();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.calcularImpuesto(-100.0, 0.13);
+        });
+    }
+    
+    // Caso 2: tasa negativa
+    @Test
+    public void calcularImpuesto_conTasaNegativa_lanzaError() {
+
+        Facturacion service = new Facturacion();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.calcularImpuesto(100.0, -0.13);
+        });
+    }
+    
+    // Caso 3: tasa mayor a 1
+    @Test
+    public void calcularImpuesto_conTasaMayorAUno_lanzaError() {
+
+        Facturacion service = new Facturacion();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.calcularImpuesto(100.0, 1.10);
+        });
+    }
+
+    // Caso 4: subtotal igual a cero
+    @Test
+    public void calcularImpuesto_conSubtotalCero_retornaCero() {
+
+        Facturacion service = new Facturacion();
+
+        double resultado = service.calcularImpuesto(0.0, 0.13);
+
+        assertEquals(0.0, resultado);
+    }
+
+    // Caso 5: valores válidos
+    @Test
+    public void calcularImpuesto_conValoresValidos_calculaCorrectamente() {
+
+        Facturacion service = new Facturacion();
+
+        double resultado = service.calcularImpuesto(100.0, 0.13);
+
+        assertEquals(13.0, resultado);
+    }
+   
+    
+    ///////-----------------------------------------------
+
 
     // RF-03: Subtotal negativo
     @Test
