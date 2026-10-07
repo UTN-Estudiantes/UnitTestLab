@@ -41,6 +41,9 @@ public class FacturacionService {
     }
 
     public double aplicarDescuentoPorVolumen(double subtotal, int cantidadArticulos) {
+        if (subtotal < 0) {
+            throw new IllegalArgumentException("El subtotal no puede ser negativo");
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
