@@ -10,8 +10,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-
 import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.params.provider.CsvSource;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -21,64 +21,74 @@ import static org.junit.jupiter.api.Assertions.*;
  *
  * @author ortiz
  */
+
 public class FacturacionServiceTest {
     
     // RF-01 — calcularSubtotal(items)
-     @Test
-    void calcularSubtotal_conListaNula_lanzaError() {
-        Facturacion service = new Facturacion();
-        
-        assertThrows(IllegalArgumentException.class, () -> {
-            service.calcularSubtotal(null);
-        });
-    }
-    
-    @Test
-    void calcularSubtotal_conListaVacia_retornaCero() {
-        Facturacion service = new Facturacion();
-        List<Item> itemsVacios = List.of(); 
-        
-        double subtotal = service.calcularSubtotal(itemsVacios);
-        
-        assertEquals(0.0, subtotal, 0.001);
-    }
-    
-    @Test
-    void calcularSubtotal_conItemsValidos_retornaSumaCorrecta() {
-        Facturacion service = new Facturacion();
+    @Nested
+    class CalcularSubtotal {
+
+        @Test
+        void listaNula_lanzaIllegalArgumentException() {
+            // Arrange
+            Facturacion service = new Facturacion();
+
+            // Act + Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> service.calcularSubtotal(null));
+        }
+
+        @Test
+        void listaVacia_retornaCero() {
+            // Arrange
+            Facturacion service = new Facturacion();
+            List<Item> items = List.of();
+
+            // Act
+            double subtotal = service.calcularSubtotal(items);
+
+            // Assert
+            assertEquals(0.0, subtotal, 0.001);
+        }
+
+        @Test
+        void precioNegativo_lanzaIllegalArgumentException() {
+            // Arrange
+            Facturacion service = new Facturacion();
+            List<Item> items = List.of(new Item("Producto", -10.0, 2));
+
+            // Act + Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> service.calcularSubtotal(items));
+        }
+
+        @ParameterizedTest
+        @ValueSource(ints = {0, -1, -100})
+        void cantidadMenorOIgualACero_lanzaIllegalArgumentException(int cantidad) {
+            // Arrange
+            Facturacion service = new Facturacion();
+            List<Item> items = List.of(new Item("Producto", 10.0, cantidad));
+
+            // Act + Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> service.calcularSubtotal(items));
+        }
+
+        @Test
+        void itemsValidos_retornaSumaDePrecioPorCantidad() {
+            // Arrange
+            Facturacion service = new Facturacion();
             List<Item> items = List.of(
-            new Item("Producto 1", 10.0, 2), 
-            new Item("Producto 2", 15.0, 3)  
-        );
-        
-        double subtotal = service.calcularSubtotal(items);
-        assertEquals(65.0, subtotal, 0.001);
-    }
-    
-    @Test
-    void calcularSubtotal_conPrecioNegativo_lanzaError() {
-        Facturacion service = new Facturacion();
-        
-        List<Item> items = List.of(
-            new Item("Producto con error", -10.0, 2)
-        );
-        
-        assertThrows(IllegalArgumentException.class, () -> {
-            service.calcularSubtotal(items);
-        });
-    }
-    
-    @Test
-    void calcularSubtotal_conCantidadInvalida_lanzaError() {
-        Facturacion service = new Facturacion();
-        
-        List<Item> items = List.of(
-            new Item("Producto", 10.0, 0) // Cantidad 0 (también puedes probar con -1)
-        );
-        
-        assertThrows(IllegalArgumentException.class, () -> {
-            service.calcularSubtotal(items);
-        });
+                    new Item("Producto 1", 10.0, 2), 
+                    new Item("Producto 2", 15.0, 3)    
+            );
+
+            // Act
+            double subtotal = service.calcularSubtotal(items);
+
+            // Assert
+            assertEquals(65.0, subtotal, 0.001);
+        }
     }
     
     ///////-----------------------------------------------
@@ -297,5 +307,71 @@ public class FacturacionServiceTest {
         }
     }
     
+    ///////-----------------------------------------------
+ 
+    //RF-05 — calcularMontoFinal(subtotal, impuesto, descuento)
     
+    //1. 
+    @ParameterizedTest
+        @CsvSource({
+            "-10.0,  130.0, 0.0",     // subtotal negativo
+            "1000.0, -10.0, 0.0",     // impuesto negativo
+            "1000.0, 130.0, -5.0",    // descuento negativo
+            "-0.01,  130.0, 0.0",     // subtotal negativo mínimo
+            "1000.0, -0.01, 0.0",     // impuesto negativo mínimo
+            "1000.0, 130.0, -0.01"    // descuento negativo mínimo
+        })
+        void valorNegativo_lanzaIllegalArgumentException(
+                double subtotal, double impuesto, double descuento) {
+            // Arrange
+            Facturacion facturacion = new Facturacion();
+
+            // Act + Assert
+            assertThrows(IllegalArgumentException.class,
+                    () -> facturacion.calcularMontoFinal(subtotal, impuesto, descuento));
+        }
+    //2. 
+    @Test
+    void calcularMontoFinal_conDescuentoMayorAlTotal_lanzaError() {
+
+        Facturacion service = new Facturacion();
+
+        assertThrows(IllegalArgumentException.class, () -> {
+            service.calcularMontoFinal(100.0, 13.0, 120.0);
+        });
+    }
+
+    //3.
+    @Test
+    void calcularMontoFinal_valoresValidos_retornaMontoFinal() {
+        // Arrange
+        Facturacion facturacion = new Facturacion();
+
+        // Act
+        double resultado =
+                facturacion.calcularMontoFinal(1000.0, 130.0, 100.0);
+
+        // Assert
+        assertEquals(1030.0, resultado, 0.001);
+    }
+
+    //4. descuento igual al total devuelve 0.0
+    @ParameterizedTest
+        @CsvSource({
+            "1000.0, 130.0, 1130.0",   // caso típico
+            "200.0,  0.0,   200.0",    // sin impuesto
+            "0.0,    50.0,  50.0",     // subtotal en cero
+            "0.0,    0.0,   0.0"       // todo en cero
+        })
+        void descuentoIgualAlTotal_devuelveCero(
+                double subtotal, double impuesto, double descuento) {
+            // Arrange
+            Facturacion facturacion = new Facturacion();
+
+            // Act
+            double resultado = facturacion.calcularMontoFinal(subtotal, impuesto, descuento);
+
+            // Assert
+            assertEquals(0.0, resultado, 0.001);
+        }
 }

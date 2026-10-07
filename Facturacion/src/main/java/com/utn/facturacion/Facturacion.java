@@ -32,4 +32,9 @@ public class Facturacion {
         throw new UnsupportedOperationException("Pendiente");
     }
     
+    //RF-05 — calcularMontoFinal(subtotal, impuesto, descuento)
+    public double calcularMontoFinal(double subtotal, double impuesto, double descuento) {
+    throw new UnsupportedOperationException("No implementado");
+    }
+    
 }
