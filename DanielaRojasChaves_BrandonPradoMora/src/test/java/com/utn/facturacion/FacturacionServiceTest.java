@@ -91,4 +91,13 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.calcularImpuesto(1000.0, 1.5));
     }
+
+    @Test
+    void calcularImpuesto_conSubtotalCero_retornaCero() {
+        // Act
+        double impuesto = servicio.calcularImpuesto(0.0, 0.13);
+
+        // Assert
+        assertEquals(0.0, impuesto, 0.001);
+    }
 }
