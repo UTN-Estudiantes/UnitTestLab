@@ -81,6 +81,7 @@ class FacturacionService:
             return False
         if not cedula.isdigit():
             return False
+        return True
 
     def calcular_monto_final(self, subtotal: float, impuesto: float, descuento: float) -> float:
         """RF-05: Calcula el monto final a pagar combinando subtotal, impuesto y descuento."""
