@@ -54,13 +54,7 @@ public class FacturacionService {
         if (cedula == null) {
             return false;
         }
-        if (cedula.isEmpty()) {
-            return false;
-        }
-        if (cedula.length() < 9) {
-            return false;
-        }
-        if (cedula.length() > 9) {
+        if (cedula.length() != 9) {
             return false;
         }
         for (char c : cedula.toCharArray()) {
