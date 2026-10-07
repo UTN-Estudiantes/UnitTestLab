@@ -234,4 +234,12 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.calcularMontoFinal(1000.0, 130.0, -1.0));
     }
+
+    @Test
+    void calcularMontoFinal_conDescuentoMayorAlTotal_lanzaError() {
+        // Arrange: subtotal + impuesto = 1130, descuento = 2000
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> servicio.calcularMontoFinal(1000.0, 130.0, 2000.0));
+    }
 }
