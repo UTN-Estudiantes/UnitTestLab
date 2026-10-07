@@ -102,3 +102,5 @@ class FacturacionService:
             raise ValueError(
                 "El descuento no puede ser mayor que el subtotal mas el impuesto"
             )
+
+        return subtotal + impuesto - descuento
