@@ -42,6 +42,7 @@ class FacturacionService:
             raise ValueError("La tasa no puede ser mayor a 1 (100%)")
         return subtotal * tasa
 
+
     # --- RF-03 ---------------------------------------------------------
     def aplicar_descuento_por_volumen(self, subtotal: float, cantidad_articulos: int) -> float:
         pass
