@@ -186,4 +186,13 @@ class FacturacionServiceTest {
         // Assert
         assertFalse(resultado);
     }
+
+    @Test
+    void validarCedula_conMasDeNueveCaracteres_retornaFalse() {
+        // Act: 10 digitos
+        boolean resultado = servicio.validarCedula("1234567890");
+
+        // Assert
+        assertFalse(resultado);
+    }
 }
