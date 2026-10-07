@@ -25,3 +25,10 @@ def test_calcular_subtotal_con_precio_negativo_lanza_error(servicio):
     items = [Item(precio_unitario=-1.0, cantidad=1)]
     with pytest.raises(ValueError):
         servicio.calcular_subtotal(items)
+
+
+@pytest.mark.parametrize("cantidad", [0, -1])
+def test_calcular_subtotal_con_cantidad_invalida_lanza_error(servicio, cantidad):
+    items = [Item(precio_unitario=10.0, cantidad=cantidad)]
+    with pytest.raises(ValueError):
+        servicio.calcular_subtotal(items)
