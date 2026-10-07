@@ -5,6 +5,54 @@ class TestFacturacionService(unittest.TestCase):
     def setUp(self):
         self.service = FacturacionService()
 
+# PRUEBAS RF-01 — calcularSubtotal(items)
+
+    def test_lista_nula_lanza_value_error(self):
+        with self.assertRaises(ValueError):
+            self.service.calcular_subtotal(None)
+
+    def test_lista_vacia_retorna_cero(self):
+        self.assertEqual(self.service.calcular_subtotal([]), 0.0)
+
+    def test_precio_unitario_negativo_lanza_error(self):
+        items = [Item(-10.0, 2)]
+        with self.assertRaises(ValueError):
+            self.service.calcular_subtotal(items)
+
+    def test_precio_negativo_en_algun_item_lanza_error(self):
+        items = [Item(10.0, 1), Item(-5.0, 3), Item(20.0, 2)]
+        with self.assertRaises(ValueError):
+            self.service.calcular_subtotal(items)
+
+    def test_cantidad_cero_lanza_error(self):
+        items = [Item(10.0, 0)]
+        with self.assertRaises(ValueError):
+            self.service.calcular_subtotal(items)
+
+    def test_cantidad_negativa_lanza_error(self):
+        items = [Item(10.0, -1)]
+        with self.assertRaises(ValueError):
+            self.service.calcular_subtotal(items)
+
+    def test_cantidad_invalida_en_algun_item_lanza_error(self):
+        items = [Item(10.0, 1), Item(5.0, 0)]
+        with self.assertRaises(ValueError):
+            self.service.calcular_subtotal(items)
+
+    def test_un_solo_item_valido(self):
+        items = [Item(10.0, 3)]
+        self.assertAlmostEqual(self.service.calcular_subtotal(items), 30.0)
+
+    def test_varios_items_validos_suma_precio_por_cantidad(self):
+        items = [Item(10.0, 2), Item(5.5, 4), Item(100.0, 1)]
+        # 20.0 + 22.0 + 100.0
+        self.assertAlmostEqual(self.service.calcular_subtotal(items), 142.0)
+
+    def test_precio_cero_es_valido(self):
+        items = [Item(0.0, 5), Item(8.0, 2)]
+        self.assertAlmostEqual(self.service.calcular_subtotal(items), 16.0)
+
+
 
 
 # PRUEBAS RF-03 — aplicarDescuentoPorVolumen(subtotal, cantidadArticulos)
