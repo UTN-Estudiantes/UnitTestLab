@@ -64,6 +64,11 @@ public class FacturacionService {
         if (cedula.length() > 9) {
             return false;
         }
+        for (char c : cedula.toCharArray()) {
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 

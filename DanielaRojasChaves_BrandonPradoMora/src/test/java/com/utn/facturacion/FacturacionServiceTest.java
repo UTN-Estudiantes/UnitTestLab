@@ -204,4 +204,13 @@ class FacturacionServiceTest {
         // Assert
         assertFalse(resultado);
     }
+
+    @Test
+    void validarCedula_conNueveDigitos_retornaTrue() {
+        // Act
+        boolean resultado = servicio.validarCedula("208880123");
+
+        // Assert
+        assertTrue(resultado);
+    }
 }
