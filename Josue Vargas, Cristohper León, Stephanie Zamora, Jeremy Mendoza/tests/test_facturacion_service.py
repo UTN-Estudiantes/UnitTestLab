@@ -35,3 +35,15 @@ def test_calcular_subtotal_con_lista_vacia_retorna_cero():
     # Assert
     assert subtotal == 0.0
 
+
+def test_calcular_subtotal_con_precio_negativo_lanza_value_error():
+    """RF-01: Si algún item tiene precioUnitario negativo, debe lanzar ValueError."""
+    # Arrange
+    servicio = FacturacionService()
+    items = [ItemFactura(precio_unitario=-10.0, cantidad=2)]
+
+    # Act & Assert
+    with pytest.raises(ValueError, match="El precio unitario no puede ser negativo"):
+        servicio.calcular_subtotal(items=items)
+
+
