@@ -57,6 +57,8 @@ class FacturacionService:
             raise ValueError("El subtotal no puede ser negativo")
         if tasa < 0:
             raise ValueError("La tasa de impuesto no puede ser negativa")
+        if tasa > 1.0:
+            raise ValueError("La tasa de impuesto no puede ser mayor a 1")
 
     def aplicar_descuento_por_volumen(self, subtotal: float, cantidad_articulos: int) -> float:
         """RF-03: Calcula el monto del descuento por volumen de compra."""
