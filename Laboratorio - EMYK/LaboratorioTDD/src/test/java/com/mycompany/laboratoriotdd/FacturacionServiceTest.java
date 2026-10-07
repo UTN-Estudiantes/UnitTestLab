@@ -1,0 +1,383 @@
+package com.mycompany.laboratoriotdd;
+
+import java.util.ArrayList;
+import java.util.List;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+public class FacturacionServiceTest {
+
+    private static final double DELTA = 0.001;
+
+    // =====================================================================
+    // RF-01 — calcularSubtotal(items)
+    // =====================================================================
+
+    @Test
+    void calcularSubtotal_conListaNula_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularSubtotal(null));
+    }
+
+    @Test
+    void calcularSubtotal_conListaVacia_retornaCero() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+        List<ItemFactura> items = new ArrayList<>();
+
+        // Act
+        double resultado = service.calcularSubtotal(items);
+
+        // Assert
+        assertEquals(0.0, resultado, DELTA);
+    }
+
+    @Test
+    void calcularSubtotal_conPrecioNegativo_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+        List<ItemFactura> items = List.of(
+                new ItemFactura(-100, 2)
+        );
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularSubtotal(items));
+    }
+
+    @Test
+    void calcularSubtotal_conCantidadCero_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+        List<ItemFactura> items = List.of(
+                new ItemFactura(5000, 0)
+        );
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularSubtotal(items));
+    }
+
+    @Test
+    void calcularSubtotal_conCantidadNegativa_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+        List<ItemFactura> items = List.of(
+                new ItemFactura(5000, -1)
+        );
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularSubtotal(items));
+    }
+
+    @Test
+    void calcularSubtotal_conVariosItems_sumaCorrectamente() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        List<ItemFactura> items = List.of(
+                new ItemFactura(5000, 2),
+                new ItemFactura(12000, 1)
+        );
+
+        // Act
+        double resultado = service.calcularSubtotal(items);
+
+        // Assert
+        assertEquals(22000.0, resultado, DELTA);
+    }
+    
+    // =====================================================================
+    // RF-02 — calcularImpuesto(subtotal, tasa)
+    // =====================================================================
+
+    @Test
+    void calcularImpuesto_conSubtotalNegativo_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularImpuesto(-1000, 0.13));
+    }
+
+    @Test
+    void calcularImpuesto_conTasaNegativa_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularImpuesto(1000, -0.13));
+    }
+
+    @Test
+    void calcularImpuesto_conTasaMayorAUno_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularImpuesto(1000, 1.5));
+    }
+
+    @Test
+    void calcularImpuesto_conSubtotalCero_retornaCero() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.calcularImpuesto(0, 0.13);
+
+        // Assert
+        assertEquals(0.0, resultado, DELTA);
+    }
+
+    @Test
+    void calcularImpuesto_conValoresValidos_retornaSubtotalPorTasa() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.calcularImpuesto(10000, 0.13);
+
+        // Assert
+        assertEquals(1300.0, resultado, DELTA);
+    }
+
+    // =====================================================================
+    // RF-03 — aplicarDescuentoPorVolumen(subtotal, cantidadArticulos)
+    // =====================================================================
+
+    @Test
+    void aplicarDescuentoPorVolumen_conSubtotalNegativo_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.aplicarDescuentoPorVolumen(-500, 10));
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conCantidadNegativa_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.aplicarDescuentoPorVolumen(10000, -1));
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conMenosDeDiezArticulos_retornaCero() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.aplicarDescuentoPorVolumen(10000, 9);
+
+        // Assert
+        assertEquals(0.0, resultado, DELTA);
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conDiezArticulos_retornaCincoPorCiento() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.aplicarDescuentoPorVolumen(10000, 10);
+
+        // Assert
+        assertEquals(500.0, resultado, DELTA);
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conVeinteArticulos_retornaDiezPorCiento() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.aplicarDescuentoPorVolumen(10000, 20);
+
+        // Assert
+        assertEquals(1000.0, resultado, DELTA);
+    }
+    
+    // =====================================================================
+    // RF-04 — validarCedula(cedula)
+    // =====================================================================
+
+    @Test
+    void validarCedula_conCedulaNula_retornaFalse() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        boolean resultado = service.validarCedula(null);
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_conCadenaVacia_retornaFalse() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        boolean resultado = service.validarCedula("");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_conMenosDeNueveCaracteres_retornaFalse() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        boolean resultado = service.validarCedula("12345678");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_conMasDeNueveCaracteres_retornaFalse() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        boolean resultado = service.validarCedula("1234567890");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_conLetra_retornaFalse() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        boolean resultado = service.validarCedula("12345678A");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_conEspacio_retornaFalse() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        boolean resultado = service.validarCedula("1234567 9");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_conGuion_retornaFalse() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        boolean resultado = service.validarCedula("123456-89");
+
+        // Assert
+        assertFalse(resultado);
+    }
+
+    @Test
+    void validarCedula_conNueveDigitos_retornaTrue() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        boolean resultado = service.validarCedula("123456789");
+
+        // Assert
+        assertTrue(resultado);
+    }
+    
+    // =====================================================================
+    // RF-05 — calcularMontoFinal(subtotal, impuesto, descuento)
+    // =====================================================================
+
+    @Test
+    void calcularMontoFinal_conSubtotalNegativo_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularMontoFinal(-1000, 130, 0));
+    }
+
+    @Test
+    void calcularMontoFinal_conImpuestoNegativo_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularMontoFinal(1000, -130, 0));
+    }
+
+    @Test
+    void calcularMontoFinal_conDescuentoNegativo_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularMontoFinal(1000, 130, -50));
+    }
+
+    @Test
+    void calcularMontoFinal_conDescuentoMayorAlTotal_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.calcularMontoFinal(1000, 130, 2000));
+    }
+
+    @Test
+    void calcularMontoFinal_conValoresValidos_retornaSubtotalMasImpuestoMenosDescuento() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.calcularMontoFinal(10000, 1300, 500);
+
+        // Assert
+        assertEquals(10800.0, resultado, DELTA);
+    }
+
+    @Test
+    void calcularMontoFinal_conDescuentoIgualAlTotal_retornaCero() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.calcularMontoFinal(1000, 130, 1130);
+
+        // Assert
+        assertEquals(0.0, resultado, DELTA);
+    }
+}
+
+
