@@ -60,4 +60,19 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.calcularSubtotal(items));
     }
+
+    @Test
+    void calcularSubtotal_conVariosItems_sumaCorrectamente() {
+        // Arrange
+        List<ItemFactura> items = List.of(
+                new ItemFactura(1500.0, 2),  // 3000
+                new ItemFactura(250.0, 4)    // 1000
+        );
+
+        // Act
+        double subtotal = servicio.calcularSubtotal(items);
+
+        // Assert
+        assertEquals(4000.0, subtotal, 0.001);
+    }
 }
