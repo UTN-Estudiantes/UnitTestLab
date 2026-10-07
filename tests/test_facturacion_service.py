@@ -211,3 +211,14 @@ def test_validar_cedula_vacia_retorna_false(servicio):
     # Assert
     assert resultado is False
 
+
+def test_validar_cedula_con_menos_de_9_caracteres_retorna_false(servicio):
+    # Arrange
+    cedula = "12345678"
+
+    # Act
+    resultado = servicio.validar_cedula(cedula)
+
+    # Assert
+    assert resultado is False
+
