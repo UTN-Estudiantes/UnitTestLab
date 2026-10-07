@@ -89,4 +89,5 @@ class FacturacionService:
 
     # --- RF-05 ---------------------------------------------------------
     def calcular_monto_final(self, subtotal: float, impuesto: float, descuento: float) -> float:
-        pass
+        if subtotal < 0:
+            raise ValueError("El subtotal no puede ser negativo")
