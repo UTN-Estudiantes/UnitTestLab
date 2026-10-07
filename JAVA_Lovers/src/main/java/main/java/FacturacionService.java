@@ -7,6 +7,7 @@ public class FacturacionService {
     private static final int UMBRAL_DESCUENTO_ALTO = 20;
     private static final double DESCUENTO_BAJO = 0.05;
     private static final double DESCUENTO_ALTO = 0.10;
+    private static final int LONGITUD_CEDULA = 9;
     
     // RF-01
     public double calcularSubtotal(List<ItemFactura> items) {
@@ -66,6 +67,14 @@ public class FacturacionService {
 
     // RF-04
     public boolean validarCedula(String cedula) {
-        throw new UnsupportedOperationException();
+        if (cedula == null || cedula.length() != LONGITUD_CEDULA) {
+            return false;
+        }
+        for (char c : cedula.toCharArray()) {
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+        return true;
     }
 }
