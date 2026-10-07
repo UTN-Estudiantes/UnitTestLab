@@ -208,3 +208,19 @@ def test_aplicar_descuento_con_veinte_o_mas_articulos_aplica_diez_por_ciento():
     # Act & Assert
     assert servicio.aplicar_descuento_por_volumen(subtotal=10000.0, cantidad_articulos=20) == 1000.0
     assert servicio.aplicar_descuento_por_volumen(subtotal=10000.0, cantidad_articulos=50) == 1000.0
+
+
+# =============================================================================
+# RF-04: Validación de cédula física costarricense (Funcional)
+# =============================================================================
+
+def test_validar_cedula_con_none_retorna_false():
+    """RF-04: Si cedula es None, debe devolver False sin lanzar error."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act
+    resultado = servicio.validar_cedula(cedula=None)
+
+    # Assert
+    assert resultado is False
