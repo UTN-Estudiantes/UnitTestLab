@@ -271,3 +271,15 @@ def test_validar_cedula_con_caracteres_no_numericos_retorna_false():
     assert servicio.validar_cedula(cedula="1-0987-065") is False
     assert servicio.validar_cedula(cedula="10987065A") is False
     assert servicio.validar_cedula(cedula="10987 065") is False
+
+
+def test_validar_cedula_con_nueve_digitos_exactos_retorna_true():
+    """RF-04: Si tiene exactamente 9 dígitos numéricos, debe devolver True."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act
+    resultado = servicio.validar_cedula(cedula="109870654")
+
+    # Assert
+    assert resultado is True
