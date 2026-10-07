@@ -208,4 +208,18 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(1000.0, resultado, DELTA);
     }
+
+    // ===================== RF-04 validarCedula =====================
+
+    @Test
+    void validarCedula_conNula_retornaFalse() {
+        // Arrange
+        String cedula = null;
+
+        // Act
+        boolean resultado = service.validarCedula(cedula);
+
+        // Assert
+        assertFalse(resultado);
+    }
 }
