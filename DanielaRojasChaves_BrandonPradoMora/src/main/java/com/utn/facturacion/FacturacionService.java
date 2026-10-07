@@ -9,17 +9,9 @@ public class FacturacionService {
         if (items == null) {
             throw new IllegalArgumentException("La lista de items no puede ser nula");
         }
-        if (items.isEmpty()) {
-            return 0.0;
-        }
         double subtotal = 0.0;
         for (ItemFactura item : items) {
-            if (item.getPrecioUnitario() < 0) {
-                throw new IllegalArgumentException("El precio unitario no puede ser negativo");
-            }
-            if (item.getCantidad() <= 0) {
-                throw new IllegalArgumentException("La cantidad debe ser mayor a cero");
-            }
+            validarItem(item);
             subtotal += item.getPrecioUnitario() * item.getCantidad();
         }
         return subtotal;
@@ -39,5 +31,14 @@ public class FacturacionService {
 
     public double calcularMontoFinal(double subtotal, double impuesto, double descuento) {
         throw new UnsupportedOperationException("No implementado");
+    }
+
+    private void validarItem(ItemFactura item) {
+        if (item.getPrecioUnitario() < 0) {
+            throw new IllegalArgumentException("El precio unitario no puede ser negativo");
+        }
+        if (item.getCantidad() <= 0) {
+            throw new IllegalArgumentException("La cantidad debe ser mayor a cero");
+        }
     }
 }
