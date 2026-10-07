@@ -43,7 +43,7 @@ public class FacturacionService {
         if (cantidadArticulos < 20) {
             return subtotal * 0.05;
         }
-        throw new UnsupportedOperationException("No implementado");
+        return subtotal * 0.10;
     }
 
     public boolean validarCedula(String cedula) {
