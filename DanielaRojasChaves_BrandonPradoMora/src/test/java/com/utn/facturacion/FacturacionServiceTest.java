@@ -148,4 +148,15 @@ class FacturacionServiceTest {
         // Assert: se devuelve el MONTO del descuento, no el total
         assertEquals(50.0, descuento, 0.001);
     }
+    @Test
+    void aplicarDescuentoPorVolumen_conVeinteArticulos_retornaDiezPorCiento() {
+        // Arrange: 20 es el limite inferior del tramo de 10%
+        double subtotal = 1000.0;
+
+        // Act
+        double descuento = servicio.aplicarDescuentoPorVolumen(subtotal, 20);
+
+        // Assert
+        assertEquals(100.0, descuento, 0.001);
+    }
 }
