@@ -147,4 +147,73 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(1300.0, impuesto, DELTA);
     }
+    
+
+    // RF-03 aplicarDescuentoPorVolumen 
+
+    @Test
+    void aplicarDescuentoPorVolumen_ConSubtotalNegativo() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> servicio.aplicarDescuentoPorVolumen(-1000.0, 10));
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_ConCantidadNegativa() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> servicio.aplicarDescuentoPorVolumen(1000.0, -1));
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_ConNueveArticulos_RetornaCero() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        double descuento = servicio.aplicarDescuentoPorVolumen(10000.0, 9);
+
+        // Assert
+        assertEquals(0.0, descuento, DELTA);
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_ConDiezArticulos_RetornaCincoPorCiento() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        double descuento = servicio.aplicarDescuentoPorVolumen(10000.0, 10);
+
+        // Assert
+        assertEquals(500.0, descuento, DELTA);
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_ConDiecinueveArticulos_RetornaCincoPorCiento() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        double descuento = servicio.aplicarDescuentoPorVolumen(10000.0, 19);
+
+        // Assert
+        assertEquals(500.0, descuento, DELTA);
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_ConVeinteArticulos_RetornaDiezPorCiento() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        double descuento = servicio.aplicarDescuentoPorVolumen(10000.0, 20);
+
+        // Assert
+        assertEquals(1000.0, descuento, DELTA);
+    }
 }

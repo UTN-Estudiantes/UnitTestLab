@@ -37,4 +37,10 @@ public class FacturacionService {
         }
         return subtotal * tasa;
     }    
+    
+ 
+    // RF-03
+    public double aplicarDescuentoPorVolumen(double subtotal, int cantidadArticulos) {
+        throw new UnsupportedOperationException();
+    }
 }
