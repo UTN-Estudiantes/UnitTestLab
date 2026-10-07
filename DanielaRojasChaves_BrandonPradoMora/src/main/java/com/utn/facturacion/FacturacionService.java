@@ -58,6 +58,9 @@ public class FacturacionService {
         if (cedula.isEmpty()) {
             return false;
         }
+        if (cedula.length() < 9) {
+            return false;
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
