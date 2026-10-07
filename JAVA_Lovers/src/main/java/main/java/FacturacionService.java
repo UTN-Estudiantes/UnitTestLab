@@ -1,6 +1,13 @@
 package main.java;
 import java.util.List;
+
 public class FacturacionService {
+    
+    private static final int UMBRAL_DESCUENTO_BAJO = 10;
+    private static final int UMBRAL_DESCUENTO_ALTO = 20;
+    private static final double DESCUENTO_BAJO = 0.05;
+    private static final double DESCUENTO_ALTO = 0.10;
+    
     // RF-01
     public double calcularSubtotal(List<ItemFactura> items) {
         if (items == null) {
@@ -41,6 +48,18 @@ public class FacturacionService {
  
     // RF-03
     public double aplicarDescuentoPorVolumen(double subtotal, int cantidadArticulos) {
-        throw new UnsupportedOperationException();
+        if (subtotal < 0) {
+            throw new IllegalArgumentException("El subtotal no puede ser negativo");
+        }
+        if (cantidadArticulos < 0) {
+            throw new IllegalArgumentException("La cantidad de articulos no puede ser negativa");
+        }
+        if (cantidadArticulos >= UMBRAL_DESCUENTO_ALTO) {
+            return subtotal * DESCUENTO_ALTO;
+        }
+        if (cantidadArticulos >= UMBRAL_DESCUENTO_BAJO) {
+            return subtotal * DESCUENTO_BAJO;
+        }
+        return 0.0;
     }
 }
