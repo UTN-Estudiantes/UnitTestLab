@@ -277,4 +277,16 @@ class FacturacionServiceTest {
                 () -> assertFalse(resultadoEspacio),
                 () -> assertFalse(resultadoGuion));
     }
+
+    @Test
+    void validarCedula_conNueveDigitos_retornaTrue() {
+        // Arrange
+        String cedula = "123456789";
+
+        // Act
+        boolean resultado = service.validarCedula(cedula);
+
+        // Assert
+        assertTrue(resultado);
+    }
 }
