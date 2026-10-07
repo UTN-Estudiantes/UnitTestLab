@@ -198,3 +198,13 @@ def test_aplicar_descuento_entre_diez_y_diecinueve_articulos_aplica_cinco_por_ci
     # Act & Assert
     assert servicio.aplicar_descuento_por_volumen(subtotal=10000.0, cantidad_articulos=10) == 500.0
     assert servicio.aplicar_descuento_por_volumen(subtotal=10000.0, cantidad_articulos=19) == 500.0
+
+
+def test_aplicar_descuento_con_veinte_o_mas_articulos_aplica_diez_por_ciento():
+    """RF-03: Si cantidadArticulos >= 20, aplica 10% del subtotal."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act & Assert
+    assert servicio.aplicar_descuento_por_volumen(subtotal=10000.0, cantidad_articulos=20) == 1000.0
+    assert servicio.aplicar_descuento_por_volumen(subtotal=10000.0, cantidad_articulos=50) == 1000.0
