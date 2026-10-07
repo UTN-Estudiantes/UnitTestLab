@@ -83,6 +83,8 @@ class FacturacionService:
         if "-" in cedula:
             return False
 
+        return True
+
 
 
     # --- RF-05 ---------------------------------------------------------
