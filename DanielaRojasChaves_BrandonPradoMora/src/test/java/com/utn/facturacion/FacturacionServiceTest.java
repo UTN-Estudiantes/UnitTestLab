@@ -168,4 +168,13 @@ class FacturacionServiceTest {
         // Assert: si el metodo lanzara un error, la prueba fallaria
         assertFalse(resultado);
     }
+
+    @Test
+    void validarCedula_conCedulaVacia_retornaFalse() {
+        // Act
+        boolean resultado = servicio.validarCedula("");
+
+        // Assert
+        assertFalse(resultado);
+    }
 }
