@@ -277,3 +277,20 @@ def test_validar_cedula_con_9_digitos_retorna_true(servicio):
     # Assert
     assert resultado is True
 
+# =============================================================================
+# RF-05 calcular_monto_final
+# =============================================================================
+
+def test_calcular_monto_final_con_subtotal_negativo_lanza_error(servicio):
+    # Arrange
+    subtotal = -100.0
+    impuesto = 13.0
+    descuento = 0.0
+
+    # Act
+    with pytest.raises(ValueError) as error:
+        servicio.calcular_monto_final(subtotal, impuesto, descuento)
+
+    # Assert
+    assert "subtotal" in str(error.value).lower()
+
