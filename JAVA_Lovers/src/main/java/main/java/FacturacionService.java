@@ -26,6 +26,15 @@ public class FacturacionService {
 
     // RF-02
     public double calcularImpuesto(double subtotal, double tasa) {
-        throw new UnsupportedOperationException();
+        if (subtotal < 0) {
+            throw new IllegalArgumentException("El subtotal no puede ser negativo");
+        }
+        if (tasa < 0) {
+            throw new IllegalArgumentException("La tasa no puede ser negativa");
+        }
+        if (tasa > 1) {
+            throw new IllegalArgumentException("La tasa no puede ser mayor a 1");
+        }
+        return subtotal * tasa;
     }    
 }
