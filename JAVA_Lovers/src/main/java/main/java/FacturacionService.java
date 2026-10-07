@@ -77,4 +77,10 @@ public class FacturacionService {
         }
         return true;
     }
+    
+  
+    // RF-05
+    public double calcularMontoFinal(double subtotal, double impuesto, double descuento) {
+        throw new UnsupportedOperationException();
+    }
 }

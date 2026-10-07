@@ -317,4 +317,66 @@ class FacturacionServiceTest {
         assertTrue(resultado);
     }
 
+    
+    // RF-05 calcularMontoFinal 
+
+    @Test
+    void calcularMontoFinal_ConSubtotalNegativo() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> servicio.calcularMontoFinal(-1.0, 13.0, 0.0));
+    }
+
+    @Test
+    void calcularMontoFinal_ConImpuestoNegativo() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> servicio.calcularMontoFinal(100.0, -13.0, 0.0));
+    }
+
+    @Test
+    void calcularMontoFinal_ConDescuentoNegativo() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> servicio.calcularMontoFinal(100.0, 13.0, -5.0));
+    }
+
+    @Test
+    void calcularMontoFinal_ConDescuentoMayorQueSubtotalMasImpuesto() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class, () -> servicio.calcularMontoFinal(100.0, 13.0, 113.01));
+    }
+
+    @Test
+    void calcularMontoFinal_ConValoresValidos_RetornaSubtotalMasImpuestoMenosDescuento() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        double monto = servicio.calcularMontoFinal(10000.0, 1300.0, 500.0);
+
+        // Assert
+        assertEquals(10800.0, monto, DELTA);
+    }
+
+    @Test
+    void calcularMontoFinal_ConDescuentoIgualASubtotalMasImpuesto_RetornaCero() {
+        // Arrange
+        FacturacionService servicio = new FacturacionService();
+
+        // Act
+        double monto = servicio.calcularMontoFinal(100.0, 13.0, 113.0);
+
+        // Assert
+        assertEquals(0.0, monto, DELTA);
+    }
 }
