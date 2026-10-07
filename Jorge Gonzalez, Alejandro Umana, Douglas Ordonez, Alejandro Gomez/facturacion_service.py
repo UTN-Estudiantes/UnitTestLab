@@ -28,9 +28,18 @@ class FacturacionService:
                 raise ValueError("La tasa de impuesto debe estar entre 0.0 y 1.0.")
 
             return subtotal * tasa
-        
+            
     def aplicar_descuento_por_volumen(self, subtotal: float, cantidad_articulos: int) -> float:
-        raise NotImplementedError()
+            """RF-03: Calcula el descuento según la cantidad total de artículos."""
+            if subtotal < 0 or cantidad_articulos < 0:
+                raise ValueError("El subtotal y la cantidad de artículos no pueden ser negativos.")
+
+            if cantidad_articulos >= 20:
+                return subtotal * 0.10
+            elif cantidad_articulos >= 10:
+                return subtotal * 0.05
+
+            return 0.0
     
     def validar_cedula(self, cedula: Optional[str]) -> bool:
         raise NotImplementedError()
