@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
 
-package com.utn.facturacion;
+package com.utn.Facturacion;
 
 /**
  *
@@ -10,7 +10,8 @@ package com.utn.facturacion;
  */
 public class Facturacion {
 
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    //RF-04 — validarCedula(cedula)
+    public static boolean esCedulaValida(String cedula) {
+        throw new UnsupportedOperationException("Pendiente");
     }
 }
