@@ -83,3 +83,17 @@ def test_calcular_impuesto_con_tasa_mayor_a_uno_lanza_error(servicio):
 
     # Assert
     assert "tasa" in str(error.value).lower()
+
+
+def test_calcular_impuesto_con_subtotal_cero_retorna_cero(servicio):
+    # Arrange
+    subtotal = 0.0
+    tasa = 0.13
+
+    # Act
+    resultado = servicio.calcular_impuesto(subtotal, tasa)
+
+    # Assert
+    assert resultado == 0.0
+
+
