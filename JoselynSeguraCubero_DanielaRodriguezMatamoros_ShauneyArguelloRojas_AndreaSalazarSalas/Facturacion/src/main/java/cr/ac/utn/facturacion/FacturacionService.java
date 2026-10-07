@@ -34,6 +34,9 @@ public class FacturacionService {
         if (tasa > 1) {
             throw new IllegalArgumentException("La tasa no puede ser mayor a 1");
         }
+        if (subtotal == 0) {
+            return 0.0;
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
