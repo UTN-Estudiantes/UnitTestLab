@@ -94,10 +94,31 @@ public class FacturacionService {
         return true;
     }
 
-    // RF-05: devuelve subtotal + impuesto - descuento.
-    // Lanza error si algún valor es negativo o si el descuento es mayor
-    // que subtotal + impuesto. Si es igual, devuelve 0.0 (es válido).
-    public double calcularMontoFinal(double subtotal, double impuesto, double descuento) {
-        throw new UnsupportedOperationException("No implementado");
+    // RF-05
+    public double calcularMontoFinal(
+            double subtotal, double impuesto, double descuento) {
+
+        if (subtotal < 0) {
+            throw new IllegalArgumentException(
+                    "El subtotal no puede ser negativo");
+        }
+
+        if (impuesto < 0) {
+            throw new IllegalArgumentException(
+                    "El impuesto no puede ser negativo");
+        }
+
+        if (descuento < 0) {
+            throw new IllegalArgumentException(
+                    "El descuento no puede ser negativo");
+        }
+
+        if (descuento > subtotal + impuesto) {
+            throw new IllegalArgumentException(
+                    "El descuento no puede superar el total");
+        }
+
+        return subtotal + impuesto - descuento;
     }
+
 }
