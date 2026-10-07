@@ -118,3 +118,13 @@ def test_calcular_impuesto_con_tasa_negativa_lanza_value_error():
     # Act & Assert
     with pytest.raises(ValueError, match="La tasa de impuesto no puede ser negativa"):
         servicio.calcular_impuesto(subtotal=1000.0, tasa=-0.05)
+
+
+def test_calcular_impuesto_con_tasa_mayor_a_uno_lanza_value_error():
+    """RF-02: Si la tasa es mayor a 1 (>100%), debe lanzar ValueError."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act & Assert
+    with pytest.raises(ValueError, match="La tasa de impuesto no puede ser mayor a 1"):
+        servicio.calcular_impuesto(subtotal=1000.0, tasa=1.5)
