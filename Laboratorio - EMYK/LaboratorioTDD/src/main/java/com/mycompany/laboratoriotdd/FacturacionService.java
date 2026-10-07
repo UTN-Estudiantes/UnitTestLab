@@ -32,7 +32,7 @@ public class FacturacionService {
         return subtotal;
     }
 
-        // RF-02
+    // RF-02
     public double calcularImpuesto(double subtotal, double tasa) {
 
         if (subtotal < 0) {
@@ -73,11 +73,25 @@ public class FacturacionService {
         return subtotal * 0.10;
     }
 
-
-    // RF-04: true si la cédula tiene exactamente 9 dígitos.
-    // Nunca lanza error: null, vacía o con letras/espacios/guiones da false.
+    // RF-04
     public boolean validarCedula(String cedula) {
-        throw new UnsupportedOperationException("No implementado");
+
+        if (cedula == null) {
+            return false;
+        }
+
+        if (cedula.length() != 9) {
+            return false;
+        }
+
+        for (int i = 0; i < cedula.length(); i++) {
+            char c = cedula.charAt(i);
+            if (c < '0' || c > '9') {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     // RF-05: devuelve subtotal + impuesto - descuento.
@@ -87,4 +101,3 @@ public class FacturacionService {
         throw new UnsupportedOperationException("No implementado");
     }
 }
-
