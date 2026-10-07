@@ -59,3 +59,14 @@ def test_calcular_impuesto_con_subtotal_negativo_lanza_error(servicio):
     assert "subtotal" in str(error.value).lower()
 
 
+def test_calcular_impuesto_con_tasa_negativa_lanza_error(servicio):
+    # Arrange
+    subtotal = 1000.0
+    tasa = -0.13
+
+    # Act
+    with pytest.raises(ValueError) as error:
+        servicio.calcular_impuesto(subtotal, tasa)
+
+    # Assert
+    assert "tasa" in str(error.value).lower()
