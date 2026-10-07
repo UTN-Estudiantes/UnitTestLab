@@ -10,6 +10,11 @@ package com.utn.Facturacion;
  */
 public class Facturacion {
 
+    //RF-03 — aplicarDescuentoPorVolumen(subtotal, cantidadArticulos)
+     public double aplicarDescuentoPorVolumen(double subtotal, int cantidadArticulos) {
+        throw new UnsupportedOperationException("No implementado");
+    }
+     
     //RF-04 — validarCedula(cedula)
     public static boolean esCedulaValida(String cedula) {
         throw new UnsupportedOperationException("Pendiente");
