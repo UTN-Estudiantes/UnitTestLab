@@ -62,4 +62,35 @@ def test_calcular_subtotal_con_cantidad_cero_o_negativa_lanza_value_error():
         servicio.calcular_subtotal(items=items_negativo)
 
 
+def test_calcular_subtotal_con_un_solo_item_retorna_subtotal():
+    """RF-01: Lista con un único item calcula precio_unitario * cantidad."""
+    # Arrange
+    servicio = FacturacionService()
+    items = [ItemFactura(precio_unitario=1500.0, cantidad=2)]
+
+    # Act
+    subtotal = servicio.calcular_subtotal(items=items)
+
+    # Assert
+    assert subtotal == 3000.0
+
+
+def test_calcular_subtotal_con_varios_items_suma_correctamente():
+    """RF-01: Lista con múltiples items suma correctamente el total."""
+    # Arrange
+    servicio = FacturacionService()
+    items = [
+        ItemFactura(precio_unitario=1500.0, cantidad=2),
+        ItemFactura(precio_unitario=500.0, cantidad=3),
+        ItemFactura(precio_unitario=200.0, cantidad=1),
+    ]
+
+    # Act
+    subtotal = servicio.calcular_subtotal(items=items)
+
+    # Assert
+    assert subtotal == 4700.0
+
+
+
 
