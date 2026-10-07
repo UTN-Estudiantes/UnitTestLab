@@ -36,6 +36,8 @@ class FacturacionService:
     def calcular_impuesto(self, subtotal: float, tasa: float) -> float:
         if subtotal < 0:
             raise ValueError("El subtotal no puede ser negativo")
+        if tasa < 0:
+            raise ValueError("La tasa no puede ser negativa")
 
     # --- RF-03 ---------------------------------------------------------
     def aplicar_descuento_por_volumen(self, subtotal: float, cantidad_articulos: int) -> float:
