@@ -294,3 +294,17 @@ def test_calcular_monto_final_con_subtotal_negativo_lanza_error(servicio):
     # Assert
     assert "subtotal" in str(error.value).lower()
 
+
+def test_calcular_monto_final_con_impuesto_negativo_lanza_error(servicio):
+    # Arrange
+    subtotal = 1000.0
+    impuesto = -130.0
+    descuento = 0.0
+
+    # Act
+    with pytest.raises(ValueError) as error:
+        servicio.calcular_monto_final(subtotal, impuesto, descuento)
+
+    # Assert
+    assert "impuesto" in str(error.value).lower()
+
