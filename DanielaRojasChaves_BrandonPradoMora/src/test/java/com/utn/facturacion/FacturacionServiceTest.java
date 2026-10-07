@@ -127,4 +127,13 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.aplicarDescuentoPorVolumen(1000.0, -1));
     }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conMenosDeDiezArticulos_retornaCero() {
+        // Act
+        double descuento = servicio.aplicarDescuentoPorVolumen(1000.0, 5);
+
+        // Assert
+        assertEquals(0.0, descuento, 0.001);
+    }
 }
