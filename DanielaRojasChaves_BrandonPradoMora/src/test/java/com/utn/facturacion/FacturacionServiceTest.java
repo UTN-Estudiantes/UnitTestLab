@@ -195,4 +195,13 @@ class FacturacionServiceTest {
         // Assert
         assertFalse(resultado);
     }
+    
+    @Test
+    void validarCedula_conLetra_retornaFalse() {
+        // Act: 9 caracteres, pero el ultimo es una letra
+        boolean resultado = servicio.validarCedula("12345678A");
+
+        // Assert
+        assertFalse(resultado);
+    }
 }
