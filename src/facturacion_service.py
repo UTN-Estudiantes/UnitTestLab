@@ -23,7 +23,9 @@ class FacturacionService:
             raise ValueError("La lista de items no puede ser None")
         if len(items) == 0:
             return 0.0
-
+        for item in items:
+            if item.precio_unitario < 0:
+                raise ValueError("El precio unitario no puede ser negativo")
 
     # --- RF-02 ---------------------------------------------------------
     def calcular_impuesto(self, subtotal: float, tasa: float) -> float:
