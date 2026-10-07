@@ -132,4 +132,17 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(0.0, resultado, DELTA);
     }
+
+    @Test
+    void calcularImpuesto_conTasaIVA_retornaTrecePorciento() {
+        // Arrange
+        double subtotal = 10000.0;
+        double tasa = 0.13;
+
+        // Act
+        double resultado = service.calcularImpuesto(subtotal, tasa);
+
+        // Assert
+        assertEquals(1300.0, resultado, DELTA);
+    }
 }
