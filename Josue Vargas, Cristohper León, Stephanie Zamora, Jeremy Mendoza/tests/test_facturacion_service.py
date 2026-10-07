@@ -166,3 +166,13 @@ def test_aplicar_descuento_con_subtotal_negativo_lanza_value_error():
     # Act & Assert
     with pytest.raises(ValueError, match="El subtotal no puede ser negativo"):
         servicio.aplicar_descuento_por_volumen(subtotal=-500.0, cantidad_articulos=15)
+
+
+def test_aplicar_descuento_con_cantidad_negativa_lanza_value_error():
+    """RF-03: Si la cantidad de artículos es negativa, debe lanzar ValueError."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act & Assert
+    with pytest.raises(ValueError, match="La cantidad de articulos no puede ser negativa"):
+        servicio.aplicar_descuento_por_volumen(subtotal=1000.0, cantidad_articulos=-5)
