@@ -6,6 +6,9 @@ import java.util.List;
 public class FacturacionService {
 
     public double calcularSubtotal(List<ItemFactura> items) {
+        if (items == null) {
+            throw new IllegalArgumentException("La lista de items no puede ser nula");
+        }
         throw new UnsupportedOperationException("No implementado");
     }
 
