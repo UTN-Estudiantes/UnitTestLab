@@ -50,4 +50,14 @@ class FacturacionServiceTest {
         assertThrows(IllegalArgumentException.class,
                 () -> servicio.calcularSubtotal(items));
     }
+
+    @Test
+    void calcularSubtotal_conCantidadCero_lanzaError() {
+        // Arrange: 0 es el valor limite (el primero invalido)
+        List<ItemFactura> items = List.of(new ItemFactura(500.0, 0));
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> servicio.calcularSubtotal(items));
+    }
 }
