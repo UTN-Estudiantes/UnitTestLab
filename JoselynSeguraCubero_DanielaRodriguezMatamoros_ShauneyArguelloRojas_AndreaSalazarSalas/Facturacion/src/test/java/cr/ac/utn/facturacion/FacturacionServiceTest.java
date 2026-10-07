@@ -145,4 +145,17 @@ class FacturacionServiceTest {
         // Assert
         assertEquals(1300.0, resultado, DELTA);
     }
+
+    // ================ RF-03 aplicarDescuentoPorVolumen ================
+
+    @Test
+    void aplicarDescuentoPorVolumen_conSubtotalNegativo_lanzaError() {
+        // Arrange
+        double subtotal = -1000.0;
+        int cantidadArticulos = 15;
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.aplicarDescuentoPorVolumen(subtotal, cantidadArticulos));
+    }
 }
