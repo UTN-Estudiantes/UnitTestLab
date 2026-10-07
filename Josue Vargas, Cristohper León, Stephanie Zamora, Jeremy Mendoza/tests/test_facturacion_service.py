@@ -176,3 +176,15 @@ def test_aplicar_descuento_con_cantidad_negativa_lanza_value_error():
     # Act & Assert
     with pytest.raises(ValueError, match="La cantidad de articulos no puede ser negativa"):
         servicio.aplicar_descuento_por_volumen(subtotal=1000.0, cantidad_articulos=-5)
+
+
+def test_aplicar_descuento_con_menos_de_diez_articulos_retorna_cero():
+    """RF-03: Si cantidadArticulos < 10, el descuento es 0.0."""
+    # Arrange
+    servicio = FacturacionService()
+
+    # Act
+    descuento = servicio.aplicar_descuento_por_volumen(subtotal=10000.0, cantidad_articulos=9)
+
+    # Assert
+    assert descuento == 0.0
