@@ -151,6 +151,66 @@ public class FacturacionServiceTest {
         assertEquals(1300.0, resultado, DELTA);
     }
 
+    // =====================================================================
+    // RF-03 — aplicarDescuentoPorVolumen(subtotal, cantidadArticulos)
+    // =====================================================================
+
+    @Test
+    void aplicarDescuentoPorVolumen_conSubtotalNegativo_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.aplicarDescuentoPorVolumen(-500, 10));
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conCantidadNegativa_lanzaError() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act + Assert
+        assertThrows(IllegalArgumentException.class,
+                () -> service.aplicarDescuentoPorVolumen(10000, -1));
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conMenosDeDiezArticulos_retornaCero() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.aplicarDescuentoPorVolumen(10000, 9);
+
+        // Assert
+        assertEquals(0.0, resultado, DELTA);
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conDiezArticulos_retornaCincoPorCiento() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.aplicarDescuentoPorVolumen(10000, 10);
+
+        // Assert
+        assertEquals(500.0, resultado, DELTA);
+    }
+
+    @Test
+    void aplicarDescuentoPorVolumen_conVeinteArticulos_retornaDiezPorCiento() {
+        // Arrange
+        FacturacionService service = new FacturacionService();
+
+        // Act
+        double resultado = service.aplicarDescuentoPorVolumen(10000, 20);
+
+        // Assert
+        assertEquals(1000.0, resultado, DELTA);
+    }
+
 }
 
 
