@@ -200,3 +200,14 @@ def test_validar_cedula_nula_retorna_false(servicio):
     # Assert
     assert resultado is False
 
+
+def test_validar_cedula_vacia_retorna_false(servicio):
+    # Arrange
+    cedula = ""
+
+    # Act
+    resultado = servicio.validar_cedula(cedula)
+
+    # Assert
+    assert resultado is False
+
